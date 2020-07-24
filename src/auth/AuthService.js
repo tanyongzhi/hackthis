@@ -3,6 +3,8 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 /* Load env variables */
 require('dotenv').config()
 
+CALLBACK_URL='http://localhost:3000/auth/google/callback'
+
 module.exports = (passport) => {
     passport.serializeUser((user, done) => {
         done(null, user);
@@ -13,7 +15,7 @@ module.exports = (passport) => {
     passport.use(new GoogleStrategy({
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: process.env.CALLBACK_URL
+            callbackURL: CALLBACK_URL
         },
         (token, refreshToken, profile, done) => {
             return done(null, {
