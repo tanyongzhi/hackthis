@@ -1,6 +1,11 @@
-var express = require('express');
+/* Setup */
+const express = require('express'),
+    app = express(),
+    passport = require('passport'),
+    auth = require('./src/auth/AuthService');
 
-var app = express();
+/* Exposed endpoints */
+require('./src/auth/AuthController')(app);
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
@@ -13,12 +18,10 @@ app.use(function(req, res, next){
 
 // ----------------------------------------------- 
 app.get('/', function(req, res) {
-    res.render('home');
+    console.log('hit!');
 })
 
-app.get('/about', function(req, res) {
-    console.log('hit');
-})
+app.use('/static', express.static('public'));
 
 app.listen(app.get('port'), function() {
     console.log('Express started...')
