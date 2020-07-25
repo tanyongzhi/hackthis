@@ -2,7 +2,6 @@
 const express = require('express'),
     app = express(),
     passport = require('passport'),
-    
     auth = require('./src/auth/AuthService');
 
 /* Exposed endpoints */
