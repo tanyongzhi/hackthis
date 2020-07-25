@@ -27,6 +27,6 @@ Set the following environment variables in `./.env`
 
 ## Authors
 
-* [**Yong Zhi Tan**](https://github.com/tanyongzhi/hackthis)  - *Backend* 
+* [**Yong Zhi Tan**](https://github.com/tanyongzhi)  - *Backend* 
 
-* **Yi Shian Ho** - *Frontend* 
+* [**Yi Shian Ho**](https://github.com/hoyishian) - *Frontend* 
