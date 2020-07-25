@@ -2,6 +2,7 @@
 const express = require('express'),
     app = express(),
     passport = require('passport'),
+    
     auth = require('./src/auth/AuthService');
 
 /* Exposed endpoints */
@@ -18,7 +19,18 @@ app.use(function(req, res, next){
 
 // ----------------------------------------------- 
 app.get('/', function(req, res) {
-    console.log('hit!');
+    if (req.session.token) {
+        res.cookie('token', req.session.token);
+        res.json({
+            status: 'session cookie set',
+            // "token": req.session.token
+        });
+    } else {
+        res.cookie('token', '')
+        res.json({
+            status: 'session cookie not set'
+        });
+    }
 })
 
 app.use('/static', express.static('public'));
