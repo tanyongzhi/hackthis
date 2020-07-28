@@ -37,7 +37,7 @@ async function listDatabases(client) {
 
 /*
 Creates entry in databses in a MongoDB connection
-Params: client oject, string of the name of db to insert to, collection to insert to, array of objects to be inserted
+Params: client oject, string of the name of db to insert to, string of collection to insert to, array of objects to be inserted
 Return: Array of insert ids on success, empty array on failure
 */
 async function insertIntoDatabase(client, db, collection, toInsert) {
@@ -53,27 +53,28 @@ async function insertIntoDatabase(client, db, collection, toInsert) {
 
 /*
 Reads from database, returning all matches of a certain criteria (simple matches)
-Params: client oject, string of the name of db to search, collection to insert to
+Params: client oject, string of the name of db to search, string of collection to insert to, json object of query
 Return: Array of matched objcts on success, empty array on failure
 */
-async function searchDatabase(client, db, collection, toInsert) {
-    // TODO
+async function searchDatabase(client, db, collection, toSearch) {
+    return client.db(db).collection(collection).find(toSearch)
+    .toArray();
 }
 
-async function updateDatabase(client, db, collection, toInsert) {
-    // TODO
-}
+// async function updateDatabase(client, db, collection, toInsert) {
+//     // TODO }
 
-async function deleteFromDatabase(client, db, collection, toInsert) {
-    // TODO
-}
+// async function deleteFromDatabase(client, db, collection, toInsert) {
+//     // TODO
+// }
 
 // Test method
 async function main(client) {
     client = await openConnectionToMongo(process.env.MONGO_URI);
     // var dbs = await listDatabases(client);
 
-    var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
+    // var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
+    var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
 
     console.log(dbs);
     await closeConnectionToMongo(client);
