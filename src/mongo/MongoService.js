@@ -38,13 +38,10 @@ async function listDatabases(client) {
 /*
 Creates entry in databses in a MongoDB connection
 Params: client oject, string of the name of db to insert to, string of collection to insert to, array of objects to be inserted
-Return: Array of insert ids on success, empty array on failure
+Return: Response object from mongo
 */
 async function insertIntoDatabase(client, db, collection, toInsert) {
     return client.db(db).collection(collection).insertMany(toInsert)
-    .then(result => {
-        return result.insertedIds;
-    })
     .catch(err => {
         console.log(err);
         return [];
@@ -71,10 +68,10 @@ async function searchDatabase(client, db, collection, toSearch) {
 // Test method
 async function main(client) {
     client = await openConnectionToMongo(process.env.MONGO_URI);
-    // var dbs = await listDatabases(client);
+    var dbs = await listDatabases(client);
 
     // var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
-    var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
+    // var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
 
     console.log(dbs);
     await closeConnectionToMongo(client);
