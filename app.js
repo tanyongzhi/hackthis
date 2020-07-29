@@ -7,7 +7,7 @@ const express = require('express'),
 /* Exposed endpoints */
 require('./src/auth/AuthController')(app);
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
