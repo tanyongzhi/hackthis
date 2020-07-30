@@ -7,29 +7,13 @@ const express = require('express'),
 /* Exposed endpoints */
 require('./src/auth/AuthController')(app);
 
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
-app.use(function(req, res, next){
-    res.locals.showTests = app.get('env') !== 'production' &&
-    next();
-});
-
 // ----------------------------------------------- 
 app.get('/', function(req, res) {
-    if (req.session.token) {
-        res.cookie('token', req.session.token);
-        res.json({
-            status: 'session cookie set',
-            // "token": req.session.token
-        });
-    } else {
-        res.cookie('token', '')
-        res.json({
-            status: 'session cookie not set'
-        });
-    }
+    res.json({token: req.session.token});
 })
 
 app.use('/static', express.static('public'));
