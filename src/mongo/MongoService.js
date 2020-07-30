@@ -58,20 +58,33 @@ async function searchDatabase(client, db, collection, toSearch) {
     .toArray();
 }
 
-// async function updateDatabase(client, db, collection, toInsert) {
-//     // TODO }
+/*
+Updates one field in a database, creates document if it doesn't already exist
+Params: client oject, string of the name of db to search, string of collection to insert to, key val pair to update, updated key val pairs 
+Return: Response object
+*/
+async function updateDatabase(client, db, collection, toUpdate, updatedPair) {
+    return client.db(db).collection(collection).updateOne(toUpdate, {$set: updatedPair});
+}
 
-// async function deleteFromDatabase(client, db, collection, toInsert) {
-//     // TODO
-// }
+/*
+Deletes one entry in a database
+Params: client oject, string of the name of db to search, string of collection to insert to, key val pair to delete
+Return: Response object
+*/
+async function deleteFromDatabase(client, db, collection, toDelete) {
+    return client.db(db).collection(collection).deleteOne(toDelete);
+}
 
 // Test method
 async function main(client) {
     client = await openConnectionToMongo(process.env.MONGO_URI);
-    var dbs = await listDatabases(client);
+    // var dbs = await listDatabases(client);
 
     // var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
     // var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
+    // var dbs = await updateDatabase(client, "testhack", "test", {test2: 'test'}, {test2: 'test2', sample: "sample"});
+    var dbs = await deleteFromDatabase(client, "testhack", "test", {test2: 'test2'});
 
     console.log(dbs);
     await closeConnectionToMongo(client);

@@ -18,9 +18,31 @@ module.exports = function(app) {
         passport.authenticate('google', {
             failureRedirect: '/'
         }),
-        (req, res) => {
-            req.session.token = req.user.token;
-            res.redirect('/') // TODO: Add a proper auth redirect page`
+        function (req, res) {
+            req.session.token = req.user;
+            res.redirect('/auth-complete') 
         }
     );
+
+    /*
+    Complete the auth flows by updating the releavant databases
+    */
+    app.get('/auth-complete', function(req, res) {
+        // posts user database with new id token
+
+        // if (req.session.token) {
+        //     res.cookie('token', req.session.token);
+        //     res.json({
+        //         status: 'session cookie set',
+        //         token: req.session.token
+        //     });
+        // } else {
+        //     res.cookie('token', '')
+        //     res.json({
+        //         status: 'session cookie not set'
+        //     });
+        // }
+
+        res.redirect('/') // final redirect to frontend
+    });
 }
