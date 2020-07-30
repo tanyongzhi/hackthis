@@ -1,14 +1,11 @@
-import React from 'react';
-import SignIn from './SignIn';
-import SearchPage from './SearchPage';
-import './App.css';
+import React from "react";
+import SignIn from "./SignIn";
+import SearchPage from "./SearchPage";
+import SearchResults from "./SearchResults";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <SearchPage/>
-    </div>
-  );
+  return <SignIn />;
 }
 
 export default App;
