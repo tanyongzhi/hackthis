@@ -20,14 +20,14 @@ module.exports = function(app) {
         }),
         function (req, res) {
             req.session.token = req.user;
-            res.redirect('/authcomplete') 
+            res.redirect('/auth-complete') 
         }
     );
 
     /*
     Complete the auth flows by updating the releavant databases
     */
-    app.get('/authcomplete', function(req, res) {
+    app.get('/auth-complete', function(req, res) {
         // posts user database with new id token
 
         // if (req.session.token) {
