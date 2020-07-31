@@ -47,6 +47,9 @@ export default function SignIn() {
           variant="contained"
           color="primary"
           className={classes.submit}
+          onClick={(e) => {
+            window.location.href='http://localhost:3000/auth/google'
+          }}
         >
           Authenticate using Google
         </Button>

@@ -20,7 +20,14 @@ Set the following environment variables in `./.env`
 `CLIENT_ID`: client id for Google api  
 `CLIENT_SECRET`: client secret for Google api  
 
+### Running the app
+To start the frontend, navigate to ./frontend and run:  
+`npm start`  
+To start the backend, navigate to root diretory and run:  
+`node app.js`
+
 ## Built With
+- React
 - Express
 - MongoDB
 
