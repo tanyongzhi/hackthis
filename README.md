@@ -27,6 +27,7 @@ To start the backend, navigate to root diretory and run:
 `node app.js`
 
 ## Built With
+- React
 - Express
 - MongoDB
 
