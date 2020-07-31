@@ -59,6 +59,6 @@ module.exports = function(app) {
         //     });
         // }
 
-        res.redirect('/') // final redirect to frontend
+        res.redirect('http://localhost:3001/search') // final redirect to frontend
     });
 }
