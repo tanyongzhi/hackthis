@@ -5,6 +5,7 @@ const passport = require('passport'),
     axios = require('axios');
 
 require('dotenv').config({path: '../../.env'});
+const authService = require('./AuthService.js');
 
 module.exports = function(app) {
     auth(passport);
@@ -17,6 +18,18 @@ module.exports = function(app) {
     app.get('/auth/google', passport.authenticate('google', {
         scope: ['https://www.googleapis.com/auth/userinfo.profile']
     }));
+
+    app.get('/auth/verify/:token/:id', function(req, res) {
+        let userToken = req.params.token;
+        let userId = req.params.id;
+
+        if (authService.verifyToken(userToken, userId)) {
+            res.json({response: 'ok'});
+        }
+        else {
+            res.status(400).send({error: "tokens do not match"});
+        }
+    })
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
@@ -37,7 +50,8 @@ module.exports = function(app) {
         await axios.post(process.env.BACKEND_URL + '/user', {
             firstName: req.session.token.profile.name.givenName,
             lastName: req.session.token.profile.name.familyName,
-            userId: req.session.token.profile.id
+            userId: req.session.token.profile.id,
+            token: req.session.token.token
         })
         .then(response => {
             console.log('ok');
@@ -59,6 +73,6 @@ module.exports = function(app) {
         //     });
         // }
 
-        res.redirect('http://localhost:3001/search/' + req.session.token.profile.id) // final redirect to frontend
+        res.redirect('http://localhost:3001/search/' + req.session.token.token) // final redirect to frontend
     });
 }

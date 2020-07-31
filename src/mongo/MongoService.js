@@ -85,7 +85,6 @@ async function main(client) {
     // var dbs = await updateDatabase(client, "testhack", "test", {test2: 'test'}, {test2: 'test2', sample: "sample"});
     // var dbs = await deleteFromDatabase(client, "testhack", "test", {test2: 'test2'});
 
-    console.log(dbs);
     await closeConnectionToMongo(client);
 }
 
@@ -95,5 +94,6 @@ module.exports = {
     insertIntoDatabase: insertIntoDatabase,
     searchDatabase: searchDatabase,
     deleteFromDatabase, deleteFromDatabase,
-    updateDatabase: updateDatabase
+    updateDatabase: updateDatabase,
+    closeConnectionToMongo: closeConnectionToMongo
 };

@@ -4,10 +4,12 @@ module.exports = function(app) {
     app.post('/user', function(req, res) {
         // check body params validity
         let params = req.body;
-        let currentUser = new User(params.firstName, params.lastName, params.userId);
-        if (currentUser.firstName == undefined || currentUser.lastName == undefined || currentUser.userId == undefined) {
+        let currentUser = new User(params.firstName, params.lastName, params.userId, params.token);
+        if (currentUser.firstName == undefined || currentUser.lastName == undefined || currentUser.userId == undefined || currentUser.token == undefined) {
             res.status(400).send({error: 'missing args'});
+            return;
         }
+        console.log(params);
 
         // update db
         if (currentUser.udpateDb()) {
