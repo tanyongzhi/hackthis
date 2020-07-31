@@ -59,6 +59,6 @@ module.exports = function(app) {
         //     });
         // }
 
-        res.redirect('http://localhost:3001/search') // final redirect to frontend
+        res.redirect('http://localhost:3001/search/' + req.session.token.profile.id) // final redirect to frontend
     });
 }
