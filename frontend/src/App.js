@@ -5,7 +5,7 @@ import SearchResults from "./SearchResults";
 import "./App.css";
 
 function App() {
-  return <SignIn />;
+  return <SearchResults />;
 }
 
 export default App;
