@@ -1,7 +1,10 @@
 const passport = require('passport'),
     cookieParser = require('cookie-parser'),
     cookieSession = require('cookie-session'),
-    auth = require('./AuthService');
+    auth = require('./AuthService'),
+    axios = require('axios');
+
+require('dotenv').config({path: '../../.env'});
 
 module.exports = function(app) {
     auth(passport);
@@ -10,6 +13,7 @@ module.exports = function(app) {
         name: 'session',
         keys: ['123']
     }));
+
     app.get('/auth/google', passport.authenticate('google', {
         scope: ['https://www.googleapis.com/auth/userinfo.profile']
     }));
@@ -27,8 +31,20 @@ module.exports = function(app) {
     /*
     Complete the auth flows by updating the releavant databases
     */
-    app.get('/auth-complete', function(req, res) {
-        // posts user database with new id token
+    app.get('/auth-complete', async function(req, res) {
+        // make POST call to /user endpoint in backend to
+        // update the database with newly created token
+        await axios.post(process.env.BACKEND_URL + '/user', {
+            firstName: req.session.token.profile.name.givenName,
+            lastName: req.session.token.profile.name.familyName,
+            userId: req.session.token.profile.id
+        })
+        .then(response => {
+            console.log('ok');
+        })
+        .catch(error => {
+            console.log('err');
+        })
 
         // if (req.session.token) {
         //     res.cookie('token', req.session.token);

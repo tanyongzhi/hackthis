@@ -1,4 +1,3 @@
-// TODO: Finish the rest of the CRUD operations
 const {MongoClient, connect} = require('mongodb');
 
 /* Load env variables */
@@ -64,7 +63,7 @@ Params: client oject, string of the name of db to search, string of collection t
 Return: Response object
 */
 async function updateDatabase(client, db, collection, toUpdate, updatedPair) {
-    return client.db(db).collection(collection).updateOne(toUpdate, {$set: updatedPair});
+    return client.db(db).collection(collection).updateOne(toUpdate, {$set: updatedPair}, {upsert: true});
 }
 
 /*
@@ -84,10 +83,17 @@ async function main(client) {
     // var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
     // var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
     // var dbs = await updateDatabase(client, "testhack", "test", {test2: 'test'}, {test2: 'test2', sample: "sample"});
-    var dbs = await deleteFromDatabase(client, "testhack", "test", {test2: 'test2'});
+    // var dbs = await deleteFromDatabase(client, "testhack", "test", {test2: 'test2'});
 
     console.log(dbs);
     await closeConnectionToMongo(client);
 }
 
-main();
+module.exports = {
+    openConnectionToMongo: openConnectionToMongo,
+    listDatabases: listDatabases,
+    insertIntoDatabase: insertIntoDatabase,
+    searchDatabase: searchDatabase,
+    deleteFromDatabase, deleteFromDatabase,
+    updateDatabase: updateDatabase
+};
