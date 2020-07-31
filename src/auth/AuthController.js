@@ -60,19 +60,6 @@ module.exports = function(app) {
             console.log('err');
         })
 
-        // if (req.session.token) {
-        //     res.cookie('token', req.session.token);
-        //     res.json({
-        //         status: 'session cookie set',
-        //         token: req.session.token
-        //     });
-        // } else {
-        //     res.cookie('token', '')
-        //     res.json({
-        //         status: 'session cookie not set'
-        //     });
-        // }
-
-        res.redirect('http://localhost:3001/search/' + req.session.token.token) // final redirect to frontend
+        res.redirect('http://localhost:3001/search/' + req.session.token.token + '/' +  req.session.token.profile.id) // final redirect to frontend
     });
 }
