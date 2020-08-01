@@ -1,4 +1,4 @@
-# HackThis - Textbook$
+# HackThis - Book Stop
 
 This is our submission for the [HackThis](http://hackthis.hackillinois.org/) hackathon organized by HackIllinois.
 
