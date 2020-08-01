@@ -13,6 +13,7 @@ app.use(express.urlencoded({
 /* Exposed endpoints */
 require('./src/auth/AuthController')(app);
 require('./src/user/UserController')(app);
+require('./src/book/SearchController')(app);
 
 // ----------------------------------------------- 
 app.get('/', function(req, res) {
