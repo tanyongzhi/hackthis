@@ -24,15 +24,20 @@ module.exports = function(app) {
             console.log(books);
 
             // search for corresponding prices on Google Books
-            let googleData = await searchService.searchGoogleBooks(bookQuery);
-            let result;
-            for (var i in googleData.data.items) { 
-                if (googleData.data.items[i].saleInfo.saleability == 'FOR_SALE') {
-                    result = googleData.data.items[i];
-                    break;
+            let final = []
+            for (var j = 0; j < 5; j++) {
+                let googleData = await searchService.searchGoogleBooks(books[j]._text);
+                console.log(books[j]._text);
+                let result;
+                for (var i in googleData.data.items) { 
+                    if (googleData.data.items[i].saleInfo.saleability == 'FOR_SALE') {
+                        result = googleData.data.items[i];
+                        final.push(result)
+                        break;
+                    }
                 }
             }
-            res.json(result);
+            res.json(final);
         }
     })
 
