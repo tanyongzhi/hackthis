@@ -11,19 +11,28 @@ module.exports = function(app) {
             return;
         }
         else {
-            let data = await searchService.searchGoodreads(req.query.query);
+            let bookQuery = req.query.query;
+
+            // get data from goodreads
+            let data = await searchService.searchGoodreads(bookQuery);
             data = JSON.parse(data);
-            arr = {}
-            arr.books = []
-            // console.log(data.GoodreadsResponse.search.results.work);
+            books = []
             for (var i in data.GoodreadsResponse.search.results.work) {
                 let currData = data.GoodreadsResponse.search.results.work[i];
-                arr.books.push(currData.best_book.title);
+                books.push(currData.best_book.title);
             }
-            // data.GoodreadsResponse.search.results.work.foreach(element => arr.books.add(element.best_book.title));
-            // console.log(arr);
-            res.json(arr);
-            // res.json(data.GoodreadsResponse.search.results.work);
+            console.log(books);
+
+            // search for corresponding prices on Google Books
+            let googleData = await searchService.searchGoogleBooks(bookQuery);
+            let result;
+            for (var i in googleData.data.items) { 
+                if (googleData.data.items[i].saleInfo.saleability == 'FOR_SALE') {
+                    result = googleData.data.items[i];
+                    break;
+                }
+            }
+            res.json(result);
         }
     })
 
