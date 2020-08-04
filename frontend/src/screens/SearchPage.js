@@ -35,7 +35,7 @@ const SearchPage = () => {
 
     return (
         <div>
-            <Header as='h1' textAlign='center' >TripSearch</Header>
+            <Header as='h1' textAlign='center' >Textbook Search</Header>
             <Divider />
             <span>Keyword</span>
             <div style={styles.bottomMargin}>
