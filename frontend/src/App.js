@@ -1,9 +1,12 @@
 import React from "react";
 import SignIn from "./SignIn";
-import SearchPage from "./SearchPage";
-import SearchResults from "./SearchResults";
+import SearchPage from './screens/SearchPage';
+import SearchResults from './screens/SearchResults';
 import { Container } from 'semantic-ui-react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Router } from "@reach/router"
+import TripSearchResults from './screens/SearchResults';
+import TripSearch from './screens/SearchPage';
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useParams } from "react-router";
 import "./App.css";
 
@@ -20,8 +23,10 @@ function App() {
   // );
   return (
     <Container style={styles.containerPadding}>
-      <SearchPage />
-      <SearchResults />
+      <Router>
+        <TripSearch path="/" />
+        <TripSearchResults path="results/:word/:status/:distance/:duration"/>
+      </Router>
     </Container>
   );
 }
