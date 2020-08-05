@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,6 +7,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import GoogleLogin from 'react-google-login';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,10 +29,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const responseGoogle = (response) => {
+  console.log(response);
+}
+
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+
 export default function SignIn() {
   const classes = useStyles();
+  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+  var ID;
+  var ID_TOKEN;
 
-  return (
+  return (       
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -41,7 +51,8 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Button
+ 
+        {/* <Button
           type="submit"
           fullWidth
           variant="contained"
@@ -52,7 +63,16 @@ export default function SignIn() {
           }}
         >
           Authenticate using Google
-        </Button>
+        </Button> */}
+          <GoogleLogin
+            clientId={CLIENT_ID}
+            buttonText="Login"
+            onSuccess={(response) => {
+              console.log(response)
+            }}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
       </div>
       <Box mt={8}></Box>
     </Container>

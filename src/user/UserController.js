@@ -9,7 +9,6 @@ module.exports = function(app) {
             res.status(400).send({error: 'missing args'});
             return;
         }
-        console.log(params);
 
         // update db
         if (currentUser.udpateDb()) {
