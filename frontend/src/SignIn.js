@@ -7,8 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import GoogleLogin from 'react-google-login';
-import { Redirect } from 'react-router'
-import { Route } from 'react-router-dom'
 import SearchPage from '../src/screens/SearchPage'
 
 
