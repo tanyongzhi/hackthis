@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,6 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import GoogleLogin from 'react-google-login';
+import { Redirect } from 'react-router'
+import { Route } from 'react-router-dom'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,11 +38,30 @@ const responseGoogle = (response) => {
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
-export default function SignIn() {
+export default class SignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: false
+    }
+    this.changeAuth = this.changeAuth.bind(this)
+  }
+  changeAuth(response) {
+    console.log(response);
+    this.setState({auth: true});
+  }
+  render() {
+    return(
+    <Route exact path="/">
+      {this.state.auth ? <Redirect to="/search/6969" /> : <TempSignIn handler={this.changeAuth} />}
+    </Route>
+    )
+  }
+}
+
+function TempSignIn(props) {
   const classes = useStyles();
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-  var ID;
-  var ID_TOKEN;
 
   return (       
     <Container component="main" maxWidth="xs">
@@ -51,7 +73,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
- 
+
         {/* <Button
           type="submit"
           fullWidth
@@ -67,9 +89,7 @@ export default function SignIn() {
           <GoogleLogin
             clientId={CLIENT_ID}
             buttonText="Login"
-            onSuccess={(response) => {
-              console.log(response)
-            }}
+            onSuccess={props.handler}
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
           />
@@ -77,4 +97,5 @@ export default function SignIn() {
       <Box mt={8}></Box>
     </Container>
   );
+
 }
