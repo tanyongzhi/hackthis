@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from "@reach/router";
+// import { useNavigate } from "@reach/router";
+import { useNavigate } from 'react-router';
 import { Header, Divider, Input, Checkbox, Button, Grid, Form, Radio } from 'semantic-ui-react';
 
 const SearchPage = () => {
@@ -7,7 +8,7 @@ const SearchPage = () => {
     const [keyword, setKeyWord] = useState('');
     const [distanceRadios, setDistanceRadios] = useState('moreThanZero');
     const [durationRadios, setDurationRadios] = useState("moreThanZero");
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const keywordInputHandler = e => {
         setKeyWord(e.target.value);
@@ -30,7 +31,7 @@ const SearchPage = () => {
 
     const searchButtonHandler = e => {
         e.preventDefault();
-        navigate(`/results/${keyword}/${status}/${distanceRadios}/${durationRadios}`);
+        // navigate(`/results/${keyword}/${status}/${distanceRadios}/${durationRadios}`);
     }
 
     return (
