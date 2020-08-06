@@ -1,6 +1,5 @@
 import React, { useState, Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -10,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import GoogleLogin from 'react-google-login';
 import { Redirect } from 'react-router'
 import { Route } from 'react-router-dom'
+import SearchPage from '../src/screens/SearchPage'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,11 +51,16 @@ export default class SignIn extends Component {
     this.setState({auth: true});
   }
   render() {
-    return(
-    <Route exact path="/">
-      {this.state.auth ? <Redirect to="/search/6969" /> : <TempSignIn handler={this.changeAuth} />}
-    </Route>
-    )
+    if (this.state.auth) {
+      return(
+      <SearchPage/>
+      )
+    } else {
+      return(
+       <TempSignIn handler={this.changeAuth}/>
+      )
+    }
+    
   }
 }
 
@@ -73,19 +78,6 @@ function TempSignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-
-        {/* <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={(e) => {
-            window.location.href='http://localhost:3000/auth/google'
-          }}
-        >
-          Authenticate using Google
-        </Button> */}
           <GoogleLogin
             clientId={CLIENT_ID}
             buttonText="Login"
