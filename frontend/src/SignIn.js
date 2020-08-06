@@ -1,14 +1,12 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import GoogleLogin from 'react-google-login';
-import SearchPage from '../src/screens/SearchPage'
-
+import GoogleLogin from "react-google-login";
+import SearchPage from "../src/screens/SearchPage";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,33 +30,28 @@ const useStyles = makeStyles((theme) => ({
 
 const responseGoogle = (response) => {
   console.log(response);
-}
-
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+};
 
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: false
-    }
-    this.changeAuth = this.changeAuth.bind(this)
+      auth: false,
+      response: null,
+    };
+    this.changeAuth = this.changeAuth.bind(this);
   }
   changeAuth(response) {
     console.log(response);
-    this.setState({auth: true});
+    this.setState({ auth: true, response: response });
+    console.log(this.state.response);
   }
   render() {
     if (this.state.auth) {
-      return(
-      <SearchPage/>
-      )
+      return <SearchPage response = {this.state.response}/>;
     } else {
-      return(
-       <TempSignIn handler={this.changeAuth}/>
-      )
+      return <TempSignIn handler={this.changeAuth} />;
     }
-    
   }
 }
 
@@ -66,7 +59,7 @@ function TempSignIn(props) {
   const classes = useStyles();
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
-  return (       
+  return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -76,16 +69,14 @@ function TempSignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-          <GoogleLogin
-            clientId={CLIENT_ID}
-            buttonText="Login"
-            onSuccess={props.handler}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />
+        <GoogleLogin
+          clientId={CLIENT_ID}
+          buttonText="Login"
+          onSuccess={props.handler}
+          onFailure={responseGoogle}
+          cookiePolicy={"single_host_origin"}
+        />
       </div>
-      <Box mt={8}></Box>
     </Container>
   );
-
 }

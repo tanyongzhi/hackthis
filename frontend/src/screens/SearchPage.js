@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-// import { useNavigate } from "@reach/router";
-import { useNavigate } from 'react-router';
 import { Header, Divider, Input, Checkbox, Button, Grid, Form, Radio } from 'semantic-ui-react';
+import SignIn from '../SignIn';
 
-const SearchPage = () => {
+const SearchPage = (response) => {
     const [status, setStatus] = useState('COMPLETED');
     const [keyword, setKeyWord] = useState('');
     const [distanceRadios, setDistanceRadios] = useState('moreThanZero');
     const [durationRadios, setDurationRadios] = useState("moreThanZero");
+    const [isAuth, setIsAuth] = useState(false);
     // const navigate = useNavigate();
 
     const keywordInputHandler = e => {
