@@ -1,4 +1,5 @@
 const searchService = require('./SearchService');
+const SearchService = require('./SearchService');
 
 module.exports = function(app) {
     app.get('/search', async function(req, res) {
@@ -28,7 +29,7 @@ module.exports = function(app) {
 
             // search for corresponding prices on Google Books
             let final = []
-            for (var j = 0; j < 1; j++) {
+            for (var j = 0; j < 5; j++) {
                 let googleData = await searchService.searchGoogleBooks(goodreadsResult[j].title);
                 let result;
                 for (var i in googleData.data.items) { 
@@ -47,6 +48,11 @@ module.exports = function(app) {
                         break;
                     }
                 }
+            }
+
+            // final value calculation
+            for (var i in final) {
+                final[i].value = searchService.assignValue([final[i].averagePrice], [[final[i].rating, final[i].numRatings]]);
             }
             res.json(final);
         }

@@ -10,6 +10,12 @@ const SearchPage = (response) => {
     const [isAuth, setIsAuth] = useState(false);
     // const navigate = useNavigate();
 
+    // function setIsAuth() {
+    //     // make http get call to http://localhost:3000/get/<token>/<id>
+
+    //     // based on response, decide which to render
+    // }
+
     const keywordInputHandler = e => {
         setKeyWord(e.target.value);
     };

@@ -33,7 +33,22 @@ async function searchGoogleBooks(query) {
     })
 }
 
+// price: array of prices
+// ratings: array of [rating, numRatings] array
+function assignValue(price, rating) {
+    price.forEach(elem => parseFloat(elem));
+    rating.forEach(elem => elem.forEach(elem2 => parseFloat(elem2)));
+
+    let minPrice = Math.min(price);
+    let totalNumRatings = rating.reduce((acc, curr) => acc + curr[1], 0);
+    let weightedTotal = rating.reduce((acc, curr) => acc + (curr[1]*curr[0]), 0);
+    let finalAverage = weightedTotal/totalNumRatings;
+
+    return finalAverage/minPrice;
+}
+
 module.exports = {
     searchGoodreads: searchGoodreads,
-    searchGoogleBooks: searchGoogleBooks
+    searchGoogleBooks: searchGoogleBooks,
+    assignValue: assignValue
 }
