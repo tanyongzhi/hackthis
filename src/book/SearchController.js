@@ -54,8 +54,21 @@ module.exports = function(app) {
             for (var i in final) {
                 final[i].value = searchService.assignValue([final[i].averagePrice], [[final[i].rating, final[i].numRatings]]);
             }
+            
+            final.sort((GetSortOrder('value')));
+
             res.json(final);
         }
     })
-
 }
+
+function GetSortOrder(prop) {    
+    return function(a, b) {    
+        if (a[prop] > b[prop]) {    
+            return -1;    
+        } else if (a[prop] < b[prop]) {    
+            return 1;    
+        }    
+        return 0;    
+    }    
+}    
