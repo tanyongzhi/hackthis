@@ -3,8 +3,10 @@ const express = require('express'),
     app = express(),
     passport = require('passport'),
     auth = require('./src/auth/AuthService');
+    cors = require('cors');
 
 app.set('port', process.env.PORT || 3000);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true

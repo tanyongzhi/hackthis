@@ -13,9 +13,11 @@ module.exports = function(app) {
         keys: ['123']
     }));
 
-    app.get('/auth/verify/:token/:id', async function(req, res) {
-        let userToken = req.params.token;
-        let userId = req.params.id;
+    app.post('/auth/verify/', async function(req, res) {
+        let params = req.body;
+        let userToken = params.token;
+        let userId = params.id;
+        console.log(userToken, userId);
 
         await authService.verifyToken(userToken, userId)
         .then(result => {

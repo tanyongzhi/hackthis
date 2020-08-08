@@ -42,9 +42,7 @@ export default class SignIn extends Component {
     this.changeAuth = this.changeAuth.bind(this);
   }
   changeAuth(response) {
-    console.log(response);
     this.setState({ auth: true, response: response });
-    console.log(this.state.response);
   }
   render() {
     if (this.state.auth) {
