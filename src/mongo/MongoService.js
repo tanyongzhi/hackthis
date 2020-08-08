@@ -52,7 +52,7 @@ Reads from database, returning all matches of a certain criteria (simple matches
 Params: client oject, string of the name of db to search, string of collection to insert to, json object of query
 Return: Array of matched objcts on success, empty array on failure
 */
-async function searchDatabase(client, db, collection, toSearch) {
+function searchDatabase(client, db, collection, toSearch) {
     return client.db(db).collection(collection).find(toSearch)
     .toArray();
 }
@@ -81,10 +81,11 @@ async function main(client) {
     // var dbs = await listDatabases(client);
 
     // var dbs = await insertIntoDatabase(client, "testhack", "test", [{"test2" :"test"}]);
-    // var dbs = await searchDatabase(client, "testhack", "test", {test2: 'test'});
+    // var dbs = await searchDatabase(client, "dev-hackthis", "books", {userId: 'test'});
     // var dbs = await updateDatabase(client, "testhack", "test", {test2: 'test'}, {test2: 'test2', sample: "sample"});
     // var dbs = await deleteFromDatabase(client, "testhack", "test", {test2: 'test2'});
 
+    // console.log(dbs);
     await closeConnectionToMongo(client);
 }
 

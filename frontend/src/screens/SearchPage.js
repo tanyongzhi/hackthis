@@ -7,7 +7,7 @@ const axios = require('axios');
 require('dotenv').config({path: '../../.env'});
 
 async function verify(response) {
-    return await axios.post('http://localhost:3000/auth/verify/', {
+    return await axios.post('http://localhost:3000/auth/verify', {
         token: response.response.tokenId,
         id: response.response.googleId
     });

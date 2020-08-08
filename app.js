@@ -26,3 +26,11 @@ app.listen(app.get('port'), function() {
     console.log('Express started...')
     console.log('on port' + app.get('port'));
 });
+
+
+function errorHandler (err, req, res, next) {
+    res.status(500)
+    res.json("error!");
+  }
+
+app.use(errorHandler)

@@ -13,7 +13,7 @@ module.exports = function(app) {
         keys: ['123']
     }));
 
-    app.post('/auth/verify/', async function(req, res) {
+    app.post('/auth/verify', async function(req, res) {
         let params = req.body;
         let userToken = params.token;
         let userId = params.id;
