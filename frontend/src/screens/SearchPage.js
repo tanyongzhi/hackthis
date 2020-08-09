@@ -14,12 +14,8 @@ async function verify(response) {
 }
 
 const SearchPage = (props) => {
-    const [status, setStatus] = useState('COMPLETED');
     const [keyword, setKeyWord] = useState('');
-    const [distanceRadios, setDistanceRadios] = useState('moreThanZero');
-    const [durationRadios, setDurationRadios] = useState("moreThanZero");
     const [isAuth, setIsAuth] = useState(false);
-    // const navigate = useNavigate();
 
     useEffect(() => {
         if (!isAuth) {
@@ -37,24 +33,8 @@ const SearchPage = (props) => {
         setKeyWord(e.target.value);
     };
 
-    const cancelCheckboxHandler = e => {
-        if (status === "CANCELED")
-            setStatus("COMPLETED");
-        else
-            setStatus("CANCELED");     
-    }
-
-    const distanceRadioGroupHandler = (e, value) => {
-        setDistanceRadios( value.value);
-    }
-
-    const durationRadioGroupHandler = (e, value) => {
-        setDurationRadios( value.value);
-    }
-
     const searchButtonHandler = e => {
         e.preventDefault();
-        // navigate(`/results/${keyword}/${status}/${distanceRadios}/${durationRadios}`);
     }
 
     if (!isAuth) {
