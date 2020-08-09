@@ -43,7 +43,7 @@ module.exports = function(app) {
         next();
     }, async function(req, res, next) {
         let id = req.body.id;
-        let toInsert = req.body.toInsert.split(',');
+        let toInsert = req.body.toInsert.split('|');
 
         User.insertDb(id, toInsert)
         .then(res.json('ok'))

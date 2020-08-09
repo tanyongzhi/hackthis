@@ -22,12 +22,14 @@ const SearchPage = (response) => {
     // const navigate = useNavigate();
 
     useEffect(() => {
-        let reply = verify(response);
-        reply.then(setIsAuth(true))
-        .catch((err) => {
-            console.error(err);
-            setIsAuth(false);
-        });
+        if (!isAuth) {
+            let reply = verify(response);
+            reply.then(setIsAuth(true))
+            .catch((err) => {
+                console.error(err);
+                // setIsAuth(false);
+            });
+        }
     });
 
     const keywordInputHandler = e => {
