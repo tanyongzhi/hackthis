@@ -2,8 +2,8 @@ const searchService = require('./SearchService');
 const SearchService = require('./SearchService');
 
 module.exports = function(app) {
-    app.get('/search', async function(req, res) {
-        if (req.query == undefined) {
+    app.get('/search', async function(req, res, next) {
+        if (req.query == undefined || req.query.length == 0) {
             res.status(400).send({error: "no query string specified"});
             return;
         }
@@ -27,6 +27,8 @@ module.exports = function(app) {
                 currBookData.numRatings = currEntry.ratings_count._text; 
                 goodreadsResult.push(currBookData);
             }
+
+            // console.log(goodReadsResult);
 
             // search for corresponding prices on Google Books
             let final = []

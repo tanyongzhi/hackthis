@@ -14,8 +14,11 @@ async function verify(response) {
 }
 
 async function search(response) {
+    console.log(response);
     return await axios.get('http://localhost:3000/search', {
-        query: response
+        params: {
+            query: response
+        }
     });
 }
 
@@ -43,11 +46,13 @@ const SearchPage = (props) => {
     const searchButtonHandler = e => {
         console.log(keyword)
         let reply = search(keyword);
-        reply.then(setRetrieveSuccess(true))
+        reply.then((response) => {
+            setRetrieveSuccess(true);
+            console.log(response);
+        })
             .catch((err) => {
                 console.error(err);
             });
-        console.log(reply);
     }
 
     if (!isAuth) {
