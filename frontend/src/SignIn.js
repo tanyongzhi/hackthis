@@ -40,13 +40,17 @@ export default class SignIn extends Component {
       response: null,
     };
     this.changeAuth = this.changeAuth.bind(this);
+    this.toggleAuthOff = this.toggleAuthOff.bind(this);
   }
   changeAuth(response) {
     this.setState({ auth: true, response: response });
   }
+  toggleAuthOff() {
+    this.setState({ auth: false });
+  }
   render() {
     if (this.state.auth) {
-      return <SearchPage response = {this.state.response}/>;
+      return <SearchPage handler={this.toggleAuthOff} response = {this.state.response}/>;
     } else {
       return <TempSignIn handler={this.changeAuth} />;
     }

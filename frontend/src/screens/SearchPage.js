@@ -8,12 +8,12 @@ require('dotenv').config({path: '../../.env'});
 
 async function verify(response) {
     return await axios.post('http://localhost:3000/auth/verify', {
-        token: response.response.tokenId,
-        id: response.response.googleId
+        token: response.tokenId,
+        id: response.googleId
     });
 }
 
-const SearchPage = (response) => {
+const SearchPage = (props) => {
     const [status, setStatus] = useState('COMPLETED');
     const [keyword, setKeyWord] = useState('');
     const [distanceRadios, setDistanceRadios] = useState('moreThanZero');
@@ -23,11 +23,12 @@ const SearchPage = (response) => {
 
     useEffect(() => {
         if (!isAuth) {
-            let reply = verify(response);
+            let reply = verify(props.response);
             reply.then(setIsAuth(true))
             .catch((err) => {
                 console.error(err);
-                // setIsAuth(false);
+                props.handler();
+                setIsAuth(false);
             });
         }
     });
