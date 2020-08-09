@@ -13,9 +13,16 @@ async function verify(response) {
     });
 }
 
+async function search(response) {
+    return await axios.get('http://localhost:3000/search', {
+        query: response
+    });
+}
+
 const SearchPage = (props) => {
     const [keyword, setKeyWord] = useState('');
     const [isAuth, setIsAuth] = useState(false);
+    const [retrieveSuccess, setRetrieveSuccess] = useState(false);
 
     useEffect(() => {
         if (!isAuth) {
@@ -34,7 +41,13 @@ const SearchPage = (props) => {
     };
 
     const searchButtonHandler = e => {
-        e.preventDefault();
+        console.log(keyword)
+        let reply = search(keyword);
+        reply.then(setRetrieveSuccess(true))
+            .catch((err) => {
+                console.error(err);
+            });
+        console.log(reply);
     }
 
     if (!isAuth) {

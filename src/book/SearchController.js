@@ -16,6 +16,7 @@ module.exports = function(app) {
 
             // get data from goodreads
             let data = await searchService.searchGoodreads(bookQuery);
+            console.log(data);
             data = JSON.parse(data);
             goodreadsResult = [];
             for (var i in data.GoodreadsResponse.search.results.work) {
