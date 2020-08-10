@@ -12,7 +12,7 @@ const Result = (props) => {
 
         {props.rating ? (
           <Card.Description style={styles.pullRight}>
-            <Rating defaultRating={props.rating} maxRating={5} disabled />
+            <Rating defaultRating={props.rating} maxRating={5} disabled icon='star'/>
           </Card.Description>
         ) : (
           ""
