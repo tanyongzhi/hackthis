@@ -26,6 +26,7 @@ const SearchPage = (props) => {
   const [keyword, setKeyWord] = useState("");
   const [isAuth, setIsAuth] = useState(false);
   const [pressSearch, setPressSearch] = useState(false);
+  const [bookArray, setBookArray] = useState([]);
 
   useEffect(() => {
     if (!isAuth) {
@@ -47,8 +48,9 @@ const SearchPage = (props) => {
     let reply = search(keyword);
     reply
       .then(function (res) {
-        console.log(res.data[0]);
-        // console.log(reply);
+        setBookArray(res.data);
+        setPressSearch(true);
+        console.log(res.data);
       })
       .catch((err) => {
         // Handle Error Here
@@ -85,6 +87,32 @@ const SearchPage = (props) => {
           </div>
         </Container>
       );
+    } else {
+        return (
+            <Container style={styles.containerPadding}>
+              <div>
+                <Header as="h1" textAlign="center">
+                  Textbook Search
+                </Header>
+                <Divider />
+                <span>Keyword</span>
+                <div style={styles.bottomMargin}>
+                  <Input
+                    fluid
+                    style={styles.bottomMargin}
+                    value={keyword}
+                    onChange={keywordInputHandler}
+                  />
+                </div>
+                <div style={styles.textCenter}>
+                  <Button primary onClick={searchButtonHandler}>
+                    Search
+                  </Button>
+                </div>
+                <Divider />
+              </div>
+            </Container>
+          );
     }
   }
 };

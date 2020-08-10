@@ -1,78 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {Card} from 'semantic-ui-react';
-import TripResult from '../components/Results';
-import {TRIPSARRAY} from '../data/DummyData';
-
-const distanceCompare = (item, distance) => {
-    switch(item){
-        case "moreThanZero":
-            return distance >= 0;
-        case "lessthan3km":
-            return distance < 3;
-        case "between3and8":
-            return distance >= 3 && item < 8;
-        case "between8and15":
-            return distance >= 8 && item <= 15;
-        case "morethan15":
-            return distance > 15; 
-        default:
-            return distance >= 0;              
-    }
-};
-
-const durationCompare = (item, duration) => {
-    switch(item){
-        case "moreThanZero":
-            return duration >= 0;
-        case "under5min":
-            return duration < 5;
-        case "between5and10":
-            return duration >= 5 && item < 10;
-        case "between10and15":
-            return duration >= 10 && item <= 15;
-        case "morethan20":
-            return duration > 20;
-        default:
-            return duration >= 0;                
-    }
-};
+import Result from '../components/Results';
 
 const SearchResults = props => {
-    const [filterdTrips, setFilterdTrips] = useState([]);
-    
-    async function prepareFilteredTrips(arrayToBeFiltered, wordparam, statusparam, distanceparam, durationparam){
-        const filtered = await arrayToBeFiltered.filter((anObject) => {
-            return (
-                    distanceCompare(distanceparam, anObject.distance) && durationCompare(durationparam, anObject.duration) &&
-                    (anObject.status.toLowerCase().indexOf(statusparam.toLowerCase()) > -1) &&
-                    (anObject.pickup_location.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 || 
-                    anObject.dropoff_location.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 ||
-                    anObject.type.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 ||
-                    anObject.driver_name.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 ||
-                    anObject.car_make.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 ||
-                    anObject.car_model.toLowerCase().indexOf(wordparam.toLowerCase()) > -1 ||
-                    anObject.car_number.toLowerCase().indexOf(wordparam.toLowerCase()) > -1)
-                );
-        });
-        return filtered;
-    }
 
-    useEffect(()=>{
-        prepareFilteredTrips(TRIPSARRAY, props.word, props.status, props.distance, props.duration).then((trip)=>{
-            setFilterdTrips(trip);
-        });
-
-    }, [props.word, props.status, props.distance, props.duration]);
-
-    
-
-    if (Array.isArray(filterdTrips) && filterdTrips.length) {
+    if (Array.isArray(props) && filterdTrips.length) {
         return (
             <Card.Group>
                 {console.log(filterdTrips)}
                 {filterdTrips.map((trip)=>{
                     return(
-                        <TripResult 
+                        <Results 
                             key={trip.id} 
                             id = {trip.id}
                             pickup={trip.pickup_location} 
@@ -100,7 +38,7 @@ const SearchResults = props => {
                 })}
             </Card.Group>
         );
-    }else{
+    } else{
         return(
             <Card fluid>
                 <Card.Content>

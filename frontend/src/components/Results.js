@@ -2,20 +2,13 @@ import React from 'react';
 import {Card, Rating, Image} from 'semantic-ui-react';
 import { useNavigate } from "@reach/router";
 
-const Results = (props) => {
-    const navigate = useNavigate();
-
-    const cardClickHandler = (e) => {
-        e.preventDefault();
-        navigate(`/trip/${props.id} `);
-    }
+const Result = (props) => {
 
     return (
-        <Card href='#' fluid onClick={cardClickHandler}>
+        <Card href='#' fluid >
             <Card.Content>
             <Card.Description>
-                <span>{props.pickup_date}</span>
-                <span style={styles.pullRight}>{props.cost} {props.cost_unit}</span>
+                <span>{props.title}</span>
             </Card.Description>
             
             {props.rating ? <Card.Description style={styles.pullRight}><Rating defaultRating={props.rating} maxRating={5} disabled /></Card.Description> : '' }
