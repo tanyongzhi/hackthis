@@ -33,7 +33,10 @@ const Result = (props) => {
         Description: {props.description}
       </Card.Content>
       <Card.Content extra>
-        Price: {props.price}
+        Price on Google: {props.googlePrice}
+      </Card.Content>
+      <Card.Content extra>
+        Price on Amazon: {props.amazonPrice}
       </Card.Content>
     </Card>
   );

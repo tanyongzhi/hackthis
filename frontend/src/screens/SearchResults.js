@@ -13,7 +13,8 @@ const SearchResults = props => {
                         <Result
                             title={result.title} 
                             rating = {result.rating}
-                            price = {result.averagePrice}
+                            googlePrice = {result.googlePrice}
+                            amazonPrice = {result.amazonPrice}
                             description = {result.description}
                         />
                     ); 

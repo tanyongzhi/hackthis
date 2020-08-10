@@ -1,5 +1,7 @@
 const axios = require('axios'),
-    convert = require('xml-js');
+    convert = require('xml-js'),
+    {searchAmazon, AmazonSearchResult} = require('unofficial-amazon-search');
+
 require('dotenv').config({path: '../../.env'});
 
 const GOODREADS_URL = 'https://www.goodreads.com/search';
@@ -21,16 +23,46 @@ async function searchGoodreads(query) {
     })
 }
 
-async function searchGoogleBooks(query, author) {
+async function searchGoogleBooks(query) {
     return await axios.get(GOOGLE_BOOKS_URL, {
         params: {
-            q: 'intitle:' + query + ' inauthor:' + author,
+            q: query,
             key: process.env.GOOGLE_BOOKS_API_KEY
         }
     })
     .catch(function(error) {
         return error;
     })
+}
+
+async function searchGoodReadsArray(query) {
+    let arr = []
+    for (var i in query) {
+        arr.push(axios.get(GOODREADS_URL, {
+            params: {
+                q: query[i],
+                key: process.env.GOODREADS_KEY
+            }}))
+    }
+    return axios.all(arr)
+    .then(axios.spread((...responses) => {
+        let result = []
+        for (var i in responses) {
+            let data = convert.xml2json(responses[i].data, {compact: true, spaces: 4});
+            result.push(data)
+        }
+        return result
+    }));
+}
+
+function searchAmazonArray(query) {
+    let arr = []
+    for (var i in query) {
+        console.log(query[i]);
+        arr.push(searchAmazon(query[i]));
+    }
+
+    return Promise.all(arr);
 }
 
 // price: array of prices
@@ -50,5 +82,7 @@ function assignValue(price, rating) {
 module.exports = {
     searchGoodreads: searchGoodreads,
     searchGoogleBooks: searchGoogleBooks,
-    assignValue: assignValue
+    assignValue: assignValue,
+    searchGoodReadsArray: searchGoodReadsArray,
+    searchAmazonArray: searchAmazonArray
 }

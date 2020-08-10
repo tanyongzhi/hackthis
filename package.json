@@ -24,6 +24,7 @@
     "passport-google-id-token": "^0.4.7",
     "passport-google-oauth": "^2.0.0",
     "semantic-ui-react": "^1.1.1",
+    "unofficial-amazon-search": "^1.2.3",
     "xml-js": "^1.6.11"
   }
 }
