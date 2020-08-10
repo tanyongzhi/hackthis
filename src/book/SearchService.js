@@ -21,10 +21,10 @@ async function searchGoodreads(query) {
     })
 }
 
-async function searchGoogleBooks(query) {
+async function searchGoogleBooks(query, author) {
     return await axios.get(GOOGLE_BOOKS_URL, {
         params: {
-            q: query,
+            q: 'intitle:' + query + ' inauthor:' + author,
             key: process.env.GOOGLE_BOOKS_API_KEY
         }
     })

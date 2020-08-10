@@ -15,27 +15,25 @@ module.exports = function(app) {
 
             // get data from goodreads
             let data = await searchService.searchGoodreads(bookQuery);
-            // console.log(data);
             data = JSON.parse(data);
             goodreadsResult = [];
             for (var i in data.GoodreadsResponse.search.results.work) {
                 let currEntry = data.GoodreadsResponse.search.results.work[i];
                 let currBookData = {}
+                currBookData.author = currEntry.best_book.author.name._text;
                 currBookData.title = currEntry.best_book.title._text;
                 currBookData.rating = currEntry.average_rating._text;
                 currBookData.numRatings = currEntry.ratings_count._text; 
                 goodreadsResult.push(currBookData);
             }
 
-            // console.log(goodReadsResult);
-
             // search for corresponding prices on Google Books
             let final = []
             for (var j = 0; j < 5; j++) {
-                let googleData = await searchService.searchGoogleBooks(goodreadsResult[j].title);
+                let googleData = await searchService.searchGoogleBooks(goodreadsResult[j].title, goodreadsResult[j].author);
                 let result;
                 for (var i in googleData.data.items) { 
-                    if (googleData.data.items[i].saleInfo.saleability == 'FOR_SALE') {
+                    if (googleData.data.items[i].saleInfo.saleability == 'FOR_SALE' && googleData.data.items[i].volumeInfo.language == 'en' ) {
                         result = googleData.data.items[i];
 
                         finalEntry = {}
@@ -43,6 +41,7 @@ module.exports = function(app) {
                         finalEntry.rating = goodreadsResult[j].rating;
                         finalEntry.numRatings = goodreadsResult[j].numRatings;
                         finalEntry.averagePrice = result.saleInfo.listPrice.amount;
+                        finalEntry.imageLink = result.volumeInfo.imageLinks.thumbnail;
                         finalEntry.description = result.volumeInfo.description;
                         finalEntry.link = result.saleInfo.buyLink;
 
