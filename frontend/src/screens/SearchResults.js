@@ -14,6 +14,7 @@ const SearchResults = props => {
                             title={result.title} 
                             rating = {result.rating}
                             price = {result.averagePrice}
+                            description = {result.description}
                         />
                     ); 
                 })}

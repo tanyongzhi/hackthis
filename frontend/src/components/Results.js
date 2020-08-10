@@ -29,6 +29,9 @@ const Result = (props) => {
                 </p>
             </Card.Description> */}
       </Card.Content>
+      <Card.Content>
+        Description: {props.description}
+      </Card.Content>
       <Card.Content extra>
         Price: {props.price}
       </Card.Content>
