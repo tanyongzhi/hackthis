@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header, Divider, Input, Button, Container } from "semantic-ui-react";
 import SignIn from "../SignIn";
+import SearchResults from "./SearchResults";
 
 
 const BACKEND_URL = process.env.BACKEND_URL;
@@ -110,6 +111,7 @@ const SearchPage = (props) => {
                   </Button>
                 </div>
                 <Divider />
+                <SearchResults array = {bookArray}/>
               </div>
             </Container>
           );
