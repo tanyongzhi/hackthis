@@ -13,6 +13,7 @@ const SearchResults = props => {
                         <Result
                             title={result.title} 
                             rating = {result.rating}
+                            price = {result.averagePrice}
                         />
                     ); 
                 })}

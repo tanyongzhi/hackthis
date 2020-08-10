@@ -29,17 +29,9 @@ const Result = (props) => {
                 </p>
             </Card.Description> */}
       </Card.Content>
-      {/* <Card.Content extra>
-        {props.status === "COMPLETED" ? (
-          <Card.Header textAlign="right" style={styles.greenBlue}>
-            {props.status}
-          </Card.Header>
-        ) : (
-          <Card.Header textAlign="right" style={styles.red}>
-            {props.status}
-          </Card.Header>
-        )}
-      </Card.Content> */}
+      <Card.Content extra>
+        Price: {props.price}
+      </Card.Content>
     </Card>
   );
 };
