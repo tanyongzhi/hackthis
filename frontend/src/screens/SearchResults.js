@@ -8,11 +8,11 @@ const SearchResults = props => {
         return (
             <Card.Group>
                 {console.log(props.array)}
-                {props.array.map((trip)=>{
+                {props.array.map((result)=>{
                     return(
                         <Result
-                            title={trip.title} 
-                            rating = {trip.rating}
+                            title={result.title} 
+                            rating = {result.rating}
                         />
                     ); 
                 })}
