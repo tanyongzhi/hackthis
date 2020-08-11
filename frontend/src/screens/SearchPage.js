@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header, Divider, Input, Button, Container } from "semantic-ui-react";
 import SignIn from "../SignIn";
 import SearchResults from "./SearchResults";
+import SearchHistory from "./SearchHistory";
 
 const BACKEND_URL = process.env.BACKEND_URL;
 const axios = require("axios");
@@ -22,12 +23,21 @@ async function search(response) {
   });
 }
 
+async function history(id) {
+  return await axios.get("http://localhost:3000/books/", {
+    params: {
+      id: id,
+    },
+  });
+}
+
 const SearchPage = (props) => {
   const [keyword, setKeyWord] = useState("");
   const [isAuth, setIsAuth] = useState(false);
   const [pressSearch, setPressSearch] = useState(false);
   const [searchHistory, setSearchHistory] = useState(false);
   const [bookArray, setBookArray] = useState([]);
+  const [historyArray, setHistoryArray] = useState([]);
 
   useEffect(() => {
     if (!isAuth) {
@@ -49,8 +59,8 @@ const SearchPage = (props) => {
     let reply = search(keyword);
     reply
       .then(function (res) {
-        setBookArray(res.data);
-        setPressSearch(true);
+        setHistoryArray(res.data);
+        setSearchHistory(true);
         console.log(res.data);
       })
       .catch((err) => {
@@ -58,6 +68,21 @@ const SearchPage = (props) => {
         console.error(err);
       });
   };
+
+  const historyButtonHandler = (e) => {
+    console.log(props.response.googleId);
+    let reply = history(props.response.googleId);
+    reply
+      .then(function (res) {
+        setBookArray(res);
+        setPressSearch(true);
+        console.log(res);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.error(err);
+      });
+  }; 
 
   if (!isAuth) {
     return <SignIn />;
@@ -85,7 +110,7 @@ const SearchPage = (props) => {
                 <Button primary onClick={searchButtonHandler}>
                   Search
                 </Button>
-                <Button>Search History</Button>
+                <Button onClick={historyButtonHandler}>Search History</Button>
               </div>
             </div>
           </Container>
@@ -111,7 +136,7 @@ const SearchPage = (props) => {
                 <Button primary onClick={searchButtonHandler}>
                   Search
                 </Button>
-                <Button>Search History</Button>
+                <Button onClick={historyButtonHandler}>Search History</Button>
               </div>
               <Divider />
               <SearchResults array={bookArray} id={props.response.googleId} />
@@ -140,10 +165,10 @@ const SearchPage = (props) => {
               <Button primary onClick={searchButtonHandler}>
                 Search
               </Button>
-              <Button>Search History</Button>
+              <Button onClick={historyButtonHandler}>Search History</Button>
             </div>
             <Divider />
-            
+            <SearchHistory array = {historyArray}/>
           </div>
         </Container>
       );
