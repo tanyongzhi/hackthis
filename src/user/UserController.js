@@ -35,8 +35,7 @@ module.exports = function(app) {
         return res.json(response[0].books);
     })
 
-    app.post('/books/insert', async function(req, res, next) {
-        console.log(req.body);
+    app.post('/books/insert', function(req, res, next) {
         if (req.body.toInsert.length == 0) {
             return res.status(400).send('error!');
         }
@@ -49,6 +48,24 @@ module.exports = function(app) {
         User.insertDb(id, toInsert)
         .then(res.json('ok'))
         .catch((err) =>{
+            console.log(err);
+            next();
+        })
+    })
+
+    app.post('/books/delete', async function (req, res, next) {
+        if (req.body.isbn.length == 0) {
+            return res.status(400).send('error!');
+        }
+        
+        next();
+    }, async function(req, res, next) {
+        let id = req.body.id;
+        let isbn = req.body.isbn;
+
+        User.deleteDb(id, isbn)
+        .then(res.json('ok'))
+        .catch((err) => {
             console.log(err);
             next();
         })
