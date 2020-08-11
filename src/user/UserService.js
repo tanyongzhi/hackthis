@@ -72,6 +72,30 @@ class User {
         
         return result;
     }
+
+    static async deleteDb(id, isbn) {
+        let client = await mongoService.openConnectionToMongo(process.env.MONGO_URI);
+
+        let currBooks = await mongoService.searchDatabase(client, DB, BOOK_COLLECTION, {userId: id});
+
+        if (currBooks.length == 0) {
+            return;
+        }
+        else {
+            for (var i in currBooks[0].books) {
+                if (isbn == currBooks[0].books[i].isbn) {
+                    delete currBooks[0].books[i];
+                    break;
+                }
+            }
+        }
+
+        let result = mongoService.updateDatabase(client, DB, BOOK_COLLECTION, {userId: id}, {books: currBooks[0].books});
+
+        mongoService.closeConnectionToMongo(client);
+        
+        return result;
+    }
 }
 
 module.exports = {
