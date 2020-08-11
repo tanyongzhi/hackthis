@@ -47,10 +47,23 @@ class User {
 
         let newBooks;
         if (currBooks.length == 0) {
-            newBooks = toInsert;
+            newBooks = [toInsert];
         }
-        else{
-            newBooks = [toInsert].concat(currBooks[0].books);
+        else {
+            // only insert if current book is not present in db
+            let shouldInsert = true;
+            for (var i in currBooks[0].books) {
+                if (toInsert.isbn == currBooks[0].books[i].isbn) {
+                    shouldInsert = false;
+                    break;
+                }
+            }
+            if (shouldInsert) {
+                newBooks = [toInsert].concat(currBooks[0].books);
+            }
+            else {
+                newBooks = currBooks[0].books;
+            }
         }
 
         let result = mongoService.updateDatabase(client, DB, BOOK_COLLECTION, {userId: id}, {books: newBooks});

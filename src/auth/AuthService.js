@@ -8,12 +8,6 @@ const {OAuth2Client} = require('google-auth-library');
 CALLBACK_URL='http://localhost:3000/auth/google/callback'
 
 async function verifyToken(token, id) {
-    // let client = await mongoService.openConnectionToMongo(process.env.MONGO_URI);
-
-    // let result = await mongoService.searchDatabase(client, process.env.DB, 'users', {userId: id});
-    // mongoService.closeConnectionToMongo(client);
-
-    // return result.length == 1;
     const client = new OAuth2Client(process.envCLIENT_ID);
     const ticket = await client.verifyIdToken({
         idToken: token,
