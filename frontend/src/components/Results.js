@@ -7,8 +7,8 @@ require("dotenv").config({ path: "../../.env" });
 
 async function addBook(response, id) {
   return await axios.post("http://localhost:3000/books/insert", {
-    id: id,
-    toInsert: response,
+      id: id,
+      toInsert: response
   });
 }
 
