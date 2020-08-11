@@ -111,7 +111,7 @@ const SearchPage = (props) => {
                   </Button>
                 </div>
                 <Divider />
-                <SearchResults array = {bookArray}/>
+                <SearchResults array = {bookArray} id = {props.response.id}/>
               </div>
             </Container>
           );

@@ -1,43 +1,53 @@
-import React from "react";
-import { Card, Rating, Image } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Card, Rating, Image, button } from "semantic-ui-react";
 import { useNavigate } from "@reach/router";
 
+const axios = require("axios");
+require("dotenv").config({ path: "../../.env" });
+
+async function addBook(response, id) {
+  return await axios.post("http://localhost:3000/books/insert", {
+    params: {
+      id: id,
+      toInsert: response,
+    },
+  });
+}
+
 const Result = (props) => {
+
+  const [isSaved, setIsSaved] = useState(false);
+  const saveBookHandler = (e) => {
+    console.log(props.jsonfile);
+    let reply = addBook(props.jsonfile, props.id);
+    reply.then(setIsSaved(true)).catch((err) => {
+      console.error(err);
+    });
+  };
+
   return (
     <Card href="#" fluid>
       <Card.Content>
-        <Card.Description>
-          <span>{props.title}</span>
-        </Card.Description>
+            <span>{props.title}</span>
+            {props.rating ? (
+              <Card.Description>
+                <Rating
+                  defaultRating={props.rating}
+                  maxRating={5}
+                  disabled
+                  icon="star"
+                />
+              </Card.Description>
+            ) : (
+              ""
+            )}
+            {isSaved ? <button class="ui right floated green button">Saved</button> : <button class="ui right floated button" onClick={saveBookHandler}>Save</button>}
+            
+      </Card.Content>
 
-        {props.rating ? (
-          <Card.Description style={styles.pullRight}>
-            <Rating defaultRating={props.rating} maxRating={5} disabled icon='star'/>
-          </Card.Description>
-        ) : (
-          ""
-        )}
-
-        {/* <Card.Description>
-                <p>
-                    <Image src='/start-cicle.png' style={styles.iconWidth}/>
-                    <span> {props.pickup}</span>
-                </p>
-                <p>
-                    <Image src='/end-circle.png' style={styles.iconWidth}/>
-                    <span> {props.dropoff}</span>
-                </p>
-            </Card.Description> */}
-      </Card.Content>
-      <Card.Content>
-        Description: {props.description}
-      </Card.Content>
-      <Card.Content extra>
-        Price on Google: {props.googlePrice}
-      </Card.Content>
-      <Card.Content extra>
-        Price on Amazon: {props.amazonPrice}
-      </Card.Content>
+      <Card.Content>Description: {props.description}</Card.Content>
+      <Card.Content extra>Price on Google: ${props.googlePrice}</Card.Content>
+      <Card.Content extra>Price on Amazon: ${props.amazonPrice}</Card.Content>
     </Card>
   );
 };

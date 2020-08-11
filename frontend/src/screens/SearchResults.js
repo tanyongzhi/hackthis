@@ -11,11 +11,13 @@ const SearchResults = props => {
                 {props.array.map((result)=>{
                     return(
                         <Result
+                            jsonfile = {result}
                             title={result.title} 
                             rating = {result.rating}
                             googlePrice = {result.googlePrice}
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}
+                            id = {props.id}
                         />
                     ); 
                 })}
