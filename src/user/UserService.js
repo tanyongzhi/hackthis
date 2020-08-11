@@ -45,7 +45,14 @@ class User {
 
         let currBooks = await mongoService.searchDatabase(client, DB, BOOK_COLLECTION, {userId: id});
 
-        let newBooks = toInsert.concat(currBooks[0].books);
+        let newBooks;
+        if (currBooks.length == 0) {
+            newBooks = toInsert;
+        }
+        else{
+            newBooks = [toInsert].concat(currBooks[0].books);
+        }
+
         let result = mongoService.updateDatabase(client, DB, BOOK_COLLECTION, {userId: id}, {books: newBooks});
 
         mongoService.closeConnectionToMongo(client);

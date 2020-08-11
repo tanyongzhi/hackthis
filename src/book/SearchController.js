@@ -16,10 +16,16 @@ module.exports = function(app) {
             // get data from google books
             let googleData = await searchService.searchGoogleBooks(bookQuery);
 
+            try {
+                let test = googleData.data.items[0].volumeInfo;
+            } catch(err) {
+                next(err);
+                return;
+            }
+
             let googleResults = []
             for (var i = 0; i < 10; i++) {
                 let volumeInfo = googleData.data.items[i].volumeInfo;
-                console.log(volumeInfo);
                 let saleInfo = googleData.data.items[i].saleInfo;
                 // if (saleInfo.saleability == 'NOT_FOR_SALE') {
                 //     continue;

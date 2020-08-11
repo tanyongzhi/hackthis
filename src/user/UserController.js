@@ -36,6 +36,7 @@ module.exports = function(app) {
     })
 
     app.post('/books/insert', async function(req, res, next) {
+        console.log(req.body);
         if (req.body.toInsert.length == 0) {
             return res.status(400).send('error!');
         }
@@ -43,7 +44,7 @@ module.exports = function(app) {
         next();
     }, async function(req, res, next) {
         let id = req.body.id;
-        let toInsert = req.body.toInsert.split('|');
+        let toInsert = req.body.toInsert;
 
         User.insertDb(id, toInsert)
         .then(res.json('ok'))
