@@ -3,7 +3,6 @@ import { Header, Divider, Input, Button, Container } from "semantic-ui-react";
 import SignIn from "../SignIn";
 import SearchResults from "./SearchResults";
 
-
 const BACKEND_URL = process.env.BACKEND_URL;
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
@@ -27,6 +26,7 @@ const SearchPage = (props) => {
   const [keyword, setKeyWord] = useState("");
   const [isAuth, setIsAuth] = useState(false);
   const [pressSearch, setPressSearch] = useState(false);
+  const [searchHistory, setSearchHistory] = useState(false);
   const [bookArray, setBookArray] = useState([]);
 
   useEffect(() => {
@@ -62,7 +62,64 @@ const SearchPage = (props) => {
   if (!isAuth) {
     return <SignIn />;
   } else {
-    if (!pressSearch) {
+    if (!searchHistory) {
+      if (!pressSearch) {
+        return (
+          <Container style={styles.containerPadding}>
+            <div>
+              <Header as="h1" textAlign="center">
+                Textbook Search
+              </Header>
+              <Divider />
+              <span>Keyword</span>
+              <div style={styles.bottomMargin}>
+                <Input
+                  fluid
+                  style={styles.bottomMargin}
+                  value={keyword}
+                  onChange={keywordInputHandler}
+                />
+              </div>
+              <Divider />
+              <div style={styles.textCenter}>
+                <Button primary onClick={searchButtonHandler}>
+                  Search
+                </Button>
+                <Button>Search History</Button>
+              </div>
+            </div>
+          </Container>
+        );
+      } else {
+        return (
+          <Container style={styles.containerPadding}>
+            <div>
+              <Header as="h1" textAlign="center">
+                Textbook Search
+              </Header>
+              <Divider />
+              <span>Keyword</span>
+              <div style={styles.bottomMargin}>
+                <Input
+                  fluid
+                  style={styles.bottomMargin}
+                  value={keyword}
+                  onChange={keywordInputHandler}
+                />
+              </div>
+              <div style={styles.textCenter}>
+                <Button primary onClick={searchButtonHandler}>
+                  Search
+                </Button>
+                <Button>Search History</Button>
+              </div>
+              <Divider />
+              <SearchResults array={bookArray} id={props.response.googleId} />
+            </div>
+          </Container>
+        );
+      }
+    } else {
       return (
         <Container style={styles.containerPadding}>
           <div>
@@ -79,42 +136,17 @@ const SearchPage = (props) => {
                 onChange={keywordInputHandler}
               />
             </div>
-            <Divider />
             <div style={styles.textCenter}>
               <Button primary onClick={searchButtonHandler}>
                 Search
               </Button>
+              <Button>Search History</Button>
             </div>
+            <Divider />
+            
           </div>
         </Container>
       );
-    } else {
-        return (
-            <Container style={styles.containerPadding}>
-              <div>
-                <Header as="h1" textAlign="center">
-                  Textbook Search
-                </Header>
-                <Divider />
-                <span>Keyword</span>
-                <div style={styles.bottomMargin}>
-                  <Input
-                    fluid
-                    style={styles.bottomMargin}
-                    value={keyword}
-                    onChange={keywordInputHandler}
-                  />
-                </div>
-                <div style={styles.textCenter}>
-                  <Button primary onClick={searchButtonHandler}>
-                    Search
-                  </Button>
-                </div>
-                <Divider />
-                <SearchResults array = {bookArray} id = {props.response.googleId}/>
-              </div>
-            </Container>
-          );
     }
   }
 };
