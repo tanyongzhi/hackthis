@@ -13,6 +13,21 @@ const HistoryResult = (props) => {
     }
     return <span> {authorString} </span>;
   };
+
+  const stringShortern = (stringIn) => {
+    console.log(stringIn);
+    if (stringIn == null) {
+      return <span> Description: No Description </span>;
+    } else {
+      let newString = stringIn.toString();
+      let length = 350;
+      let trimmedString =
+        newString.length > length
+          ? newString.substring(0, length - 3) + "..."
+          : newString.substring(0, length);
+      return <span> Description: {trimmedString} </span>;
+    }
+  };
   return (
     <Card fluid>
       <Card.Content>
@@ -32,8 +47,8 @@ const HistoryResult = (props) => {
         {authorArray(props.author)}
       </Card.Content>
 
-      <Card.Content>Description: {props.description}</Card.Content>
-      <Card.Content extra>
+      <Card.Content> {stringShortern(props.description)}</Card.Content>
+      <Card.Content>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -60,7 +75,7 @@ const HistoryResult = (props) => {
           </Grid.Row>
         </Grid>
       </Card.Content>
-      <Card.Content extra>
+      <Card.Content>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Grid.Column>
