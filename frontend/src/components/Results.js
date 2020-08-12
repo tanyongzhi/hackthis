@@ -12,15 +12,26 @@ async function addBook(response, id) {
   });
 }
 
+
+
 const Result = (props) => {
   const [isSaved, setIsSaved] = useState(false);
   const saveBookHandler = (e) => {
-    console.log("Results");
-    console.log(props.jsonfile);
     let reply = addBook(props.jsonfile, props.id);
     reply.then(setIsSaved(true)).catch((err) => {
       console.error(err);
     });
+  };
+  const authorArray = (array) => {
+    let authorString = "Author(s): ";
+    var i;
+    for (i = 0; i < array.length; i++) {
+      authorString += array[i];
+      if (i != array.length - 1) {
+        authorString += ", ";
+      }
+    }
+    return <span> {authorString} </span>;
   };
 
   return (
@@ -39,6 +50,7 @@ const Result = (props) => {
         ) : (
           ""
         )}
+        {authorArray(props.author)} 
         {isSaved ? (
           <button class="ui right floated green button">Saved</button>
         ) : (

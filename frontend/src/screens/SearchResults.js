@@ -13,6 +13,7 @@ const SearchResults = props => {
                             jsonfile = {result}
                             title={result.title} 
                             rating = {result.rating}
+                            author = {result.authors}
                             googlePrice = {result.googlePrice}
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}
