@@ -108,7 +108,7 @@ const SearchPage = (props) => {
                 <Button primary onClick={searchButtonHandler}>
                   Search
                 </Button>
-                <Button onClick={historyButtonHandler}>Search History</Button>
+                <Button onClick={historyButtonHandler}>Saved Books</Button>
               </div>
             </div>
           </Container>
@@ -134,7 +134,7 @@ const SearchPage = (props) => {
                 <Button primary onClick={searchButtonHandler}>
                   Search
                 </Button>
-                <Button onClick={historyButtonHandler}>Search History</Button>
+                <Button onClick={historyButtonHandler}>Saved Books</Button>
               </div>
               <Divider />
               <SearchResults array={bookArray} id={props.response.googleId} />
@@ -163,7 +163,7 @@ const SearchPage = (props) => {
               <Button primary onClick={searchButtonHandler}>
                 Search
               </Button>
-              <Button onClick={historyButtonHandler}>Search History</Button>
+              <Button onClick={historyButtonHandler}>Saved Books</Button>
             </div>
             <Divider />
             <SearchHistory array = {historyArray}/>
