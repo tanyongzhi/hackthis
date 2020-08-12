@@ -53,6 +53,7 @@ class User {
             // only insert if current book is not present in db
             let shouldInsert = true;
             for (var i in currBooks[0].books) {
+                console.log(currBooks[0].books[i]);
                 if (toInsert.isbn == currBooks[0].books[i].isbn) {
                     shouldInsert = false;
                     break;

@@ -24,11 +24,7 @@ async function search(response) {
 }
 
 async function history(id) {
-  return await axios.get("http://localhost:3000/books/", {
-    params: {
-      id: id,
-    },
-  });
+  return await axios.get("http://localhost:3000/books/" + id);
 }
 
 const SearchPage = (props) => {
@@ -59,8 +55,10 @@ const SearchPage = (props) => {
     let reply = search(keyword);
     reply
       .then(function (res) {
-        setHistoryArray(res.data);
-        setSearchHistory(true);
+        
+        setBookArray(res.data);
+        setPressSearch(true);
+        setSearchHistory(false);
         console.log(res.data);
       })
       .catch((err) => {
@@ -74,9 +72,9 @@ const SearchPage = (props) => {
     let reply = history(props.response.googleId);
     reply
       .then(function (res) {
-        setBookArray(res);
-        setPressSearch(true);
-        console.log(res);
+        setHistoryArray(res.data);
+        setSearchHistory(true);
+        console.log(res.data);
       })
       .catch((err) => {
         // Handle Error Here

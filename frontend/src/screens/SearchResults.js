@@ -7,7 +7,6 @@ const SearchResults = props => {
     if (Array.isArray(props.array) && props.array.length) {
         return (
             <Card.Group>
-                {console.log(props.array)}
                 {props.array.map((result)=>{
                     return(
                         <Result
