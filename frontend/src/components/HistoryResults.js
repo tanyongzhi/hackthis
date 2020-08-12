@@ -7,7 +7,7 @@ const HistoryResult = (props) => {
     var i;
     for (i = 0; i < array.length; i++) {
       authorString += array[i];
-      if (i != array.length - 1) {
+      if (i !== array.length - 1) {
         authorString += ", ";
       }
     }
@@ -90,18 +90,6 @@ const HistoryResult = (props) => {
       </Card.Content>
     </Card>
   );
-};
-
-const styles = {
-  red: {
-    color: "#f85959",
-  },
-  greenBlue: {
-    color: "#278ea5",
-  },
-  iconWidth: {
-    width: "1em",
-  },
 };
 
 export default HistoryResult;
