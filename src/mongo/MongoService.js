@@ -40,6 +40,11 @@ Params: client oject, string of the name of db to insert to, string of collectio
 Return: Response object from mongo
 */
 async function insertIntoDatabase(client, db, collection, toInsert) {
+    for (var i in toInsert) {
+        if (toInsert[i] == null || typeof toInsert[i] === 'undefined') {
+            return;
+        }
+    }
     return client.db(db).collection(collection).insertMany(toInsert)
     .catch(err => {
         console.log(err);
