@@ -38,6 +38,7 @@ module.exports = function(app) {
                 if (volumeInfo.subtitle != undefined) {
                     currBooksData.title += ' ' + volumeInfo.subtitle;
                 }
+                currBooksData.imageLink = volumeInfo.imageLinks.thumbnail;
                 currBooksData.authors = volumeInfo.authors;
                 currBooksData.isbn = isbn;
                 currBooksData.price = price;
@@ -77,6 +78,7 @@ module.exports = function(app) {
                 finalEntry.googlePrice = currentGoogleResult.price;
                 finalEntry.link = currentGoogleResult.link;
                 finalEntry.description = currentGoogleResult.description;
+                finalEntry.imageLink = currentGoogleResult.imageLink;
 
                 final.push(finalEntry);
             }
