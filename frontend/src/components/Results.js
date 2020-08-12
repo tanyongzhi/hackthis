@@ -92,7 +92,7 @@ const Result = (props) => {
                 onClick={(e) => {
                   e.preventDefault();
                   let newLink = "http://" + props.googleLink;
-                  window.location.href = newLink;
+                  window.open(newLink,'_blank');
                 }}
               >
                 {" "}
@@ -110,7 +110,7 @@ const Result = (props) => {
           <Grid.Row columns={2}>
             <Grid.Column>
             {props.amazonPrice == null ? 
-              null: 
+              "Price on Amazon: Not Available":  
               "Price on Amazon: $" + props.amazonPrice
             }
               </Grid.Column>
@@ -124,7 +124,7 @@ const Result = (props) => {
                   e.preventDefault();
                   let newLink = "http://" + props.amazonLink;
                   console.log(newLink)
-                  window.location.href = newLink;
+                  window.open(newLink,'_blank');
                 }}
               >
                 {" "}
