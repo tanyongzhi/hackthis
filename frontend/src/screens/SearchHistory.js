@@ -17,6 +17,8 @@ const SearchHistory = props => {
                             googlePrice = {result.googlePrice}
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}
+                            amazonLink = {result.amazonLink}
+                            googleLink = {result.link}
                         />
                     ); 
                 })}

@@ -37,7 +37,7 @@ const Result = (props) => {
     /* <i class="google icon"></i> */
   }
   return (
-    <Card href="#" fluid>
+    <Card fluid>
       <Card.Content>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
