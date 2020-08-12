@@ -48,7 +48,7 @@ const HistoryResult = (props) => {
                   class="ui right floated button"
                   onClick={(e) => {
                     e.preventDefault();
-                    let newLink = "http://" + props.googleLink;
+                    let newLink = props.googleLink;
                     window.open(newLink, "_blank");
                   }}
                 >
