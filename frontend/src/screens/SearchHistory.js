@@ -19,6 +19,7 @@ const SearchHistory = props => {
                             description = {result.description}
                             amazonLink = {result.amazonLink}
                             googleLink = {result.link}
+                            imageLink = {result.imageLink}
                         />
                     ); 
                 })}

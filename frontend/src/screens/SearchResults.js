@@ -17,6 +17,7 @@ const SearchResults = props => {
                             googlePrice = {result.googlePrice}
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}
+                            imageLink = {result.imageLink}
                             id = {props.id}
                             amazonLink = {result.amazonLink}
                             googleLink = {result.link}

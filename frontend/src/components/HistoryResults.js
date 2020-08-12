@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Rating, Grid } from "semantic-ui-react";
+import { Card, Rating, Grid, Image } from "semantic-ui-react";
 
 const HistoryResult = (props) => {
   const authorArray = (array) => {
@@ -31,20 +31,30 @@ const HistoryResult = (props) => {
   return (
     <Card fluid>
       <Card.Content>
-        <span>{props.title}</span>
-        {props.rating ? (
-          <Card.Description>
-            <Rating
-              defaultRating={props.rating}
-              maxRating={5}
-              disabled
-              icon="star"
-            />
-          </Card.Description>
-        ) : (
-          ""
-        )}
-        {authorArray(props.author)}
+        <Grid divided="vertically">
+          <Grid.Row columns={2}>
+            <Grid.Column width={3}>
+              <Image src={props.imageLink}></Image>
+            </Grid.Column>
+
+            <Grid.Column width={10}>
+              <div>{props.title}</div>
+              {authorArray(props.author)}
+              {props.rating ? (
+                <Card.Description>
+                  <Rating
+                    defaultRating={props.rating}
+                    maxRating={5}
+                    disabled
+                    icon="star"
+                  />
+                </Card.Description>
+              ) : (
+                ""
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Card.Content>
 
       <Card.Content> {stringShortern(props.description)}</Card.Content>

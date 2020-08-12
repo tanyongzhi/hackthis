@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Rating, Grid } from "semantic-ui-react";
+import { Card, Rating, Grid, Image } from "semantic-ui-react";
 
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
@@ -50,9 +50,13 @@ const Result = (props) => {
     <Card fluid>
       <Card.Content>
         <Grid divided="vertically">
-          <Grid.Row columns={2}>
-            <Grid.Column width={13}>
-              <span>{props.title}</span>
+          <Grid.Row columns={3}>
+          <Grid.Column width={3}>
+            <Image src= {props.imageLink}></Image>
+          </Grid.Column>
+            <Grid.Column width={10}>
+              <div>{props.title}</div>
+              {authorArray(props.author)}
               {props.rating ? (
                 <Card.Description>
                   <Rating
@@ -65,7 +69,7 @@ const Result = (props) => {
               ) : (
                 ""
               )}
-              {authorArray(props.author)}
+              
             </Grid.Column>
             <Grid.Column width={3}>
               {isSaved ? (
