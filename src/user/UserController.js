@@ -22,7 +22,11 @@ module.exports = function(app) {
 
     app.get('/books/:id', async function(req, res, next) {
         let id = req.params.id;
-        let response = await User.retrieveDb(id);
+        let response = await User.retrieveDb(id)
+        .catch(err => {
+            console.log(err);
+            return res.status(400).send('error!');
+        });
         
         if (response.length == 0) {
             return res.status(400).send('error!');

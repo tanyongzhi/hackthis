@@ -14,77 +14,40 @@ module.exports = function(app) {
             let bookQuery = req.query.query;
 
             // get data from google books
-            let googleData = await searchService.searchGoogleBooks(bookQuery);
-
             try {
-                let test = googleData.data.items[0].volumeInfo;
-            } catch(err) {
-                next(err);
+                var googleResults = await searchGoogle(bookQuery);
+            }
+            catch(err) {
+                console.log(err);
+                next();
                 return;
             }
 
-            let googleResults = []
-            for (var i = 0; i < 10; i++) {
-                let volumeInfo = googleData.data.items[i].volumeInfo;
-                let saleInfo = googleData.data.items[i].saleInfo;
-                // if (saleInfo.saleability == 'NOT_FOR_SALE') {
-                //     continue;
-                // }
-
-                let isbn = volumeInfo.industryIdentifiers[0].identifier;
-                let price = saleInfo.listPrice!= undefined ? saleInfo.listPrice.amount : Infinity;
-                let currBooksData = {}
-                currBooksData.title = volumeInfo.title;
-                if (volumeInfo.subtitle != undefined) {
-                    currBooksData.title += ' ' + volumeInfo.subtitle;
-                }
-                currBooksData.imageLink = volumeInfo.imageLinks.thumbnail;
-                currBooksData.authors = volumeInfo.authors;
-                currBooksData.isbn = isbn;
-                currBooksData.price = price;
-                currBooksData.link = saleInfo.buyLink;
-                currBooksData.description = volumeInfo.description;
-
-                googleResults.push(currBooksData);
-            }
-
             // get array of isbn codes
-            let isbnArr = []
+            var isbnArr = [];
             for (var i in googleResults) {
-                isbnArr.push(googleResults[i].isbn)
+                isbnArr.push(googleResults[i].isbn);
             }
 
             // now, we search goodreads
-            let goodReadsResult = await searchService.searchGoodReadsArray(isbnArr);
-            let final = []
-            for (var i in goodReadsResult) {
-                let currentGoodReadsResult = goodReadsResult[i];
-                let currentGoogleResult = googleResults[i];
-
-                currentGoodReadsResult = JSON.parse(currentGoodReadsResult);
-                let currEntry = currentGoodReadsResult.GoodreadsResponse.search.results.work;
-
-                let finalEntry = {}
-                finalEntry.title = currentGoogleResult.title;
-                finalEntry.authors = currentGoogleResult.authors;
-                try {
-                    finalEntry.rating = currEntry.average_rating._text;
-                    finalEntry.numRatings = currEntry.ratings_count._text;
-                }
-                catch {
-                    continue;
-                }
-                finalEntry.isbn = currentGoogleResult.isbn;
-                finalEntry.googlePrice = currentGoogleResult.price;
-                finalEntry.link = currentGoogleResult.link;
-                finalEntry.description = currentGoogleResult.description;
-                finalEntry.imageLink = currentGoogleResult.imageLink;
-
-                final.push(finalEntry);
+            try {
+                var final = await searchGoodreads(isbnArr, googleResults);
+            }
+            catch(err) {
+                console.log(err);
+                next();
+                return;
             }
 
             // get amazon data
-            await getAmazonData(final);
+            try {
+                await getAmazonData(final);
+            }
+            catch {
+                console.log(err);
+                next();
+                return;
+            }
             console.log(final)
             
             // final value calculation
@@ -103,7 +66,7 @@ module.exports = function(app) {
 }
 
 async function getAmazonData(final) {
-    let nameArr = []
+    let nameArr = [];
     for (var i in final) {
         nameArr.push(final[i].title + ' ' + final[i].authors[0]);
     }
@@ -125,6 +88,69 @@ async function getAmazonData(final) {
         }
     }
 }
+
+async function searchGoogle(bookQuery) {
+    let googleData = await searchService.searchGoogleBooks(bookQuery);
+
+    let test = googleData.data.items[0].volumeInfo;
+
+    let googleResults = [];
+    for (var i = 0; i < 10; i++) {
+        let volumeInfo = googleData.data.items[i].volumeInfo;
+        let saleInfo = googleData.data.items[i].saleInfo;
+
+        let isbn = volumeInfo.industryIdentifiers[0].identifier;
+        let price = saleInfo.listPrice!= undefined ? saleInfo.listPrice.amount : Infinity;
+        let currBooksData = {}
+        currBooksData.title = volumeInfo.title;
+        if (volumeInfo.subtitle != undefined) {
+            currBooksData.title += ' ' + volumeInfo.subtitle;
+        }
+        currBooksData.imageLink = volumeInfo.imageLinks.thumbnail;
+        currBooksData.authors = volumeInfo.authors;
+        currBooksData.isbn = isbn;
+        currBooksData.price = price;
+        currBooksData.link = saleInfo.buyLink;
+        currBooksData.description = volumeInfo.description;
+
+        googleResults.push(currBooksData);
+    }
+
+    return googleResults;
+}
+
+async function searchGoodreads(isbnArr, googleResults) {
+    let goodReadsResult = await searchService.searchGoodReadsArray(isbnArr);
+    let final = []
+    for (var i in goodReadsResult) {
+        let currentGoodReadsResult = goodReadsResult[i];
+        let currentGoogleResult = googleResults[i];
+
+        currentGoodReadsResult = JSON.parse(currentGoodReadsResult);
+        let currEntry = currentGoodReadsResult.GoodreadsResponse.search.results.work;
+
+        let finalEntry = {}
+        finalEntry.title = currentGoogleResult.title;
+        finalEntry.authors = currentGoogleResult.authors;
+        try {
+            finalEntry.rating = currEntry.average_rating._text;
+            finalEntry.numRatings = currEntry.ratings_count._text;
+        }
+        catch {
+            continue;
+        }
+        finalEntry.isbn = currentGoogleResult.isbn;
+        finalEntry.googlePrice = currentGoogleResult.price;
+        finalEntry.link = currentGoogleResult.link;
+        finalEntry.description = currentGoogleResult.description;
+        finalEntry.imageLink = currentGoogleResult.imageLink;
+
+        final.push(finalEntry);
+    }
+    
+    return final;
+}
+
 
 function GetSortOrder(prop) {    
     return function(a, b) {    
