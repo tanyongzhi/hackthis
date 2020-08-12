@@ -18,6 +18,8 @@ const SearchResults = props => {
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}
                             id = {props.id}
+                            amazonLink = {result.amazonLink}
+                            googleLink = {result.link}
                         />
                     ); 
                 })}

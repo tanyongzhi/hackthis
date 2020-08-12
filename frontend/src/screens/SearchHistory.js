@@ -13,6 +13,7 @@ const SearchHistory = props => {
                         <HistoryResult
                             title={result.title} 
                             rating = {result.rating}
+                            author = {result.authors}
                             googlePrice = {result.googlePrice}
                             amazonPrice = {result.amazonPrice}
                             description = {result.description}

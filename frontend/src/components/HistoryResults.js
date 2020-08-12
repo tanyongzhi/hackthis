@@ -3,6 +3,17 @@ import { Card, Rating} from "semantic-ui-react";
 
 const HistoryResult = (props) => {
 
+  const authorArray = (array) => {
+    let authorString = "Author(s): ";
+    var i;
+    for (i = 0; i < array.length; i++) {
+      authorString += array[i];
+      if (i != array.length - 1) {
+        authorString += ", ";
+      }
+    }
+    return <span> {authorString} </span>;
+  };
   return (
     <Card href="#" fluid>
       <Card.Content>
@@ -19,6 +30,7 @@ const HistoryResult = (props) => {
             ) : (
               ""
             )}
+            {authorArray(props.author)} 
             
       </Card.Content>
 
