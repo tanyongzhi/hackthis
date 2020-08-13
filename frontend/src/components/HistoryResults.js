@@ -15,10 +15,11 @@ async function removeBook(isbn, id) {
 
 const HistoryResult = (props) => {
   const removeBookHandler = (e) => {
-    console.log("Removed")
     let reply = removeBook(props.isbn, props.id);
     reply.then(
-      props.setRerender(true)
+      props.setRerender(true),
+      console.log(props.id),
+      console.log(props.isbn)
     ).catch((err) => {
       console.error(err);
     });
@@ -37,7 +38,6 @@ const HistoryResult = (props) => {
   };
 
   const stringShortern = (stringIn) => {
-    console.log(stringIn);
     if (stringIn == null) {
       return <span> Description: No Description </span>;
     } else {

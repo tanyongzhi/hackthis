@@ -51,12 +51,14 @@ const SearchPage = (props) => {
     }
     if (rerender) {
       setSearchHistory(true);
-      setRerender(false);
       let reply = history(props.response.googleId);
+      setRerender(false);
       reply
         .then(function (res) {
           setHistoryArray(res.data);
+          console.log(res.data);
           console.log("Rerender");
+          
         })
         .catch((err) => {
           // Handle Error Here
