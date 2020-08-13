@@ -58,18 +58,18 @@ module.exports = function(app) {
                 res.json({});
                 return;
             }
-            console.log(final)
             
-            // final value calculation
-            for (var i in final) {
-                final[i].value = searchService.assignValue([final[i].googlePrice, final[i].amazonPrice], [[final[i].rating, final[i].numRatings], [final[i].amazonRating, final[i].numRatings]]);
-            }
-
             final = final.filter((value) => {
-                return (value.amazonPrice != Infinity || value.googlePrice != Infinity) && value.numRatings != 0;
+                return (value.amazonPrice != Infinity || value.googlePrice != Infinity || value.eBayPrice != Infinity) && value.numRatings != 0;
             })
 
+            // final value calculation
+            for (var i in final) {
+                final[i].value = searchService.assignValue([final[i].googlePrice, final[i].amazonPrice], [[final[i].rating, final[i].numRatings]]);
+            }
+
             final.sort((GetSortOrder('value')));
+            console.log(final)
             res.json(final);
         }
     })
@@ -85,10 +85,7 @@ async function getAmazonData(final) {
     console.log(amazonResult);
 
     for (var i in final) {
-        if (amazonResult[i][0] == undefined) {
-            continue;
-        }
-        try {
+       try {
             final[i].amazonPrice = amazonResult[i][0]._prices[0].price;
             final[i].amazonLink = 'amazon.com' + amazonResult[i][0]._productUrl;
         }

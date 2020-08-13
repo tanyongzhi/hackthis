@@ -114,9 +114,12 @@ function searchAmazonArray(query) {
 // ratings: array of [rating, numRatings] array
 function assignValue(price, rating) {
     price.forEach(elem => parseFloat(elem));
-    rating.forEach(elem => elem.forEach(elem2 => parseFloat(elem2)));
+    for (var i in rating) {
+        rating[i][0] = parseFloat(rating[i][0]);
+        rating[i][1] = parseFloat(rating[i][1]);
+    }
 
-    let minPrice = Math.min(price);
+    let minPrice = Math.min(...price);
     let totalNumRatings = rating.reduce((acc, curr) => acc + curr[1], 0);
     let weightedTotal = rating.reduce((acc, curr) => acc + (curr[1]*curr[0]), 0);
     let finalAverage = weightedTotal/totalNumRatings;
