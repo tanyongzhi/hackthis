@@ -100,7 +100,7 @@ async function searchGoogle(bookQuery) {
     let googleData = await searchService.searchGoogleBooks(bookQuery);
 
     let googleResults = [];
-    for (var i = 0; i < 25; i++) {
+    for (var i = 0; i < 15; i++) {
         let volumeInfo = googleData.data.items[i].volumeInfo;
         let saleInfo = googleData.data.items[i].saleInfo;
         try {
