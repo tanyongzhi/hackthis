@@ -27,7 +27,7 @@ async function searchGoogleBooks(query) {
     return await axios.get(GOOGLE_BOOKS_URL, {
         params: {
             q: query,
-            maxResults: 15,
+            maxResults: 25,
             key: process.env.GOOGLE_BOOKS_API_KEY
         }
     })

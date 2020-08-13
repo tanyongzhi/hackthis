@@ -103,7 +103,7 @@ async function searchGoogle(bookQuery) {
     let googleData = await searchService.searchGoogleBooks(bookQuery);
 
     let googleResults = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 25; i++) {
         let volumeInfo = googleData.data.items[i].volumeInfo;
         let saleInfo = googleData.data.items[i].saleInfo;
         try {
@@ -113,7 +113,16 @@ async function searchGoogle(bookQuery) {
             continue;
         }
 
-        let price = saleInfo.listPrice!= undefined ? saleInfo.listPrice.amount : Infinity;
+        let price;
+        if (saleInfo.listPrice != undefined) {
+            price = saleInfo.listPrice.amount;
+        }
+        else if (saleInfo.retailPrice != undefined) {
+            price = saleInfo.retailPrice.amount;
+        }
+        else {
+            price = Infinity;
+        }
         let currBooksData = {}
         currBooksData.title = volumeInfo.title;
         if (volumeInfo.subtitle != undefined) {
