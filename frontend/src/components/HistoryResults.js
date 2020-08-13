@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Rating, Grid, Image } from "semantic-ui-react";
+import GitHubForkRibbon from 'react-github-fork-ribbon';
 
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
@@ -52,6 +53,13 @@ const HistoryResult = (props) => {
   };
 
   return (
+    <div>
+    <GitHubForkRibbon href="https://github.com/tanyongzhi/hackthis"
+    target="_blank"
+    position="right">
+    Fork me on GitHub
+    </GitHubForkRibbon>
+
     <Card fluid>
       <Card.Content>
         <Grid divided="vertically">
@@ -174,6 +182,7 @@ const HistoryResult = (props) => {
         </Grid>
       </Card.Content>
     </Card>
+    </div>
   );
 };
 
