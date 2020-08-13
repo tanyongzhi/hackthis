@@ -65,8 +65,8 @@ module.exports = function(app) {
                 final[i].value = searchService.assignValue([final[i].googlePrice, final[i].amazonPrice], [[final[i].rating, final[i].numRatings], [final[i].amazonRating, final[i].numRatings]]);
             }
 
-            final = final.filter((value, index, arr) => {
-                return value.amazonPrice != Infinity || value.googlePrice != Infinity;
+            final = final.filter((value) => {
+                return (value.amazonPrice != Infinity || value.googlePrice != Infinity) && value.numRatings != 0;
             })
 
             final.sort((GetSortOrder('value')));
@@ -101,8 +101,6 @@ async function getAmazonData(final) {
 
 async function searchGoogle(bookQuery) {
     let googleData = await searchService.searchGoogleBooks(bookQuery);
-
-    let test = googleData.data.items[0].volumeInfo;
 
     let googleResults = [];
     for (var i = 0; i < 10; i++) {
