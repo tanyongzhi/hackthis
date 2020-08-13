@@ -29,6 +29,7 @@ app.listen(app.get('port'), function() {
 
 
 function errorHandler (err, req, res, next) {
+    console.log("HANDLING ERRORS!!!!!!!!")
     res.status(500)
     res.json("error!");
   }

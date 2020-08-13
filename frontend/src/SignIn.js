@@ -43,6 +43,7 @@ export default class SignIn extends Component {
     this.toggleAuthOff = this.toggleAuthOff.bind(this);
   }
   changeAuth(response) {
+    console.log(response);
     this.setState({ auth: true, response: response });
   }
   toggleAuthOff() {

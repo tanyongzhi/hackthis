@@ -20,6 +20,8 @@ const SearchHistory = props => {
                             amazonLink = {result.amazonLink}
                             googleLink = {result.link}
                             imageLink = {result.imageLink}
+                            eBayLink = {result.eBayLink}
+                            eBayPrice = {result.eBayPrice}
                         />
                     ); 
                 })}

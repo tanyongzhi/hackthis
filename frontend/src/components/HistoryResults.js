@@ -85,6 +85,35 @@ const HistoryResult = (props) => {
           </Grid.Row>
         </Grid>
       </Card.Content>
+
+      <Card.Content>
+        <Grid divided="vertically">
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              {props.eBayPrice == null
+                ? "Price on Ebay: Not Available"
+                : "Price on Ebay: $" + props.eBayPrice}
+            </Grid.Column>
+            <Grid.Column>
+              {props.eBayPrice == null ? null : (
+                <button
+                  type="button"
+                  class="ui right floated button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    let newLink = props.eBayPrice;
+                    console.log(newLink);
+                    window.open(newLink, "_blank");
+                  }}
+                >
+                  {" "}
+                  Buy on Ebay
+                </button>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Card.Content>
       <Card.Content>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
@@ -113,6 +142,7 @@ const HistoryResult = (props) => {
           </Grid.Row>
         </Grid>
       </Card.Content>
+ 
     </Card>
   );
 };

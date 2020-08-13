@@ -43,7 +43,17 @@ module.exports = function(app) {
             try {
                 await getAmazonData(final);
             }
-            catch {
+            catch(err) {
+                console.log(err);
+                next();
+                return;
+            }
+
+            // search ebay
+            try {
+                await searchEBay(final);
+            }
+            catch(err) {
                 console.log(err);
                 next();
                 return;
@@ -121,7 +131,7 @@ async function searchGoogle(bookQuery) {
 
 async function searchGoodreads(isbnArr, googleResults) {
     let goodReadsResult = await searchService.searchGoodReadsArray(isbnArr);
-    let final = []
+    let final = [];
     for (var i in goodReadsResult) {
         let currentGoodReadsResult = goodReadsResult[i];
         let currentGoogleResult = googleResults[i];
@@ -149,6 +159,26 @@ async function searchGoodreads(isbnArr, googleResults) {
     }
     
     return final;
+}
+
+async function searchEBay(final) {
+    let nameArr = [];
+    for (var i in final) {
+        nameArr.push(final[i].title + ' ' + final[i].authors[0]);
+    }
+
+    let eBayResult = await searchService.searchEbayArray(nameArr);
+
+    for (var i in final) {
+        try {
+            final[i].eBayPrice = eBayResult[i].data.itemSummaries[0].price.value;
+            final[i].eBayLink = eBayResult[i].data.itemSummaries[0].itemWebUrl;
+        }
+        catch(err) {
+            final[i].eBayPrice = Infinity;
+            final[i].eBayLink = undefined;
+        }
+    }
 }
 
 

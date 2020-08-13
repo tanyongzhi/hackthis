@@ -4,19 +4,20 @@ import SignIn from "../SignIn";
 import SearchResults from "./SearchResults";
 import SearchHistory from "./SearchHistory";
 
-const BACKEND_URL = process.env.BACKEND_URL;
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 async function verify(response) {
-  return await axios.post("http://localhost:3000/auth/verify", {
+  return await axios.post(BACKEND_URL + '/auth/verify', {
     token: response.tokenId,
     id: response.googleId,
   });
 }
 
 async function search(response) {
-  return await axios.get("http://localhost:3000/search", {
+  return await axios.get(BACKEND_URL + '/search', {
     params: {
       query: response,
     },
@@ -24,7 +25,7 @@ async function search(response) {
 }
 
 async function history(id) {
-  return await axios.get("http://localhost:3000/books/" + id);
+  return await axios.get(BACKEND_URL + '/books/' + id);
 }
 
 const SearchPage = (props) => {
@@ -97,6 +98,10 @@ const SearchPage = (props) => {
             <div>
               <Header as="h1" textAlign="center">
                 Textbook Search
+              </Header>
+              <Header as="h1" textAlign="center">
+                Welcome,  
+                {' '+ props.response.Ot.sU}
               </Header>
               <Divider />
               <span>Keyword</span>

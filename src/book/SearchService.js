@@ -55,6 +55,50 @@ async function searchGoodReadsArray(query) {
     }));
 }
 
+async function searchEbayArray(query) {
+    const CLIENT_ID = process.env.EBAY_CLIENT_ID;
+    const CLIENT_SECRET = process.env.EBAY_CLIENT_SECRET;
+
+    let data = CLIENT_ID + ':' + CLIENT_SECRET;
+    let base64data = Buffer.from(data).toString('base64');
+
+    const oAuthData = {
+        grant_type: "client_credentials",
+        scope: 'https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
+    }
+
+    let accessToken = await axios.post('https://api.ebay.com/identity/v1/oauth2/token', 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope', {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + base64data
+        }
+    });
+    accessToken = accessToken.data.access_token;
+
+    let arr = []
+    for (var i in query) {
+        arr.push(searchEbay(query[i], accessToken))
+    }
+
+    return Promise.all(arr);
+}
+
+function searchEbay(query, accessToken) {
+    let config = {
+        headers: {
+        Authorization: 'Bearer ' + accessToken
+        },
+        params: {
+            q: query,
+            limit: 2,
+            filter: [{field: 'condition', value: 'NEW'}]
+        }
+    }
+        
+    return axios.get('https://api.ebay.com/buy/browse/v1/item_summary/search',config)
+    .catch(err => console.log(err.response.data))
+}
+
 function searchAmazonArray(query) {
     let arr = []
     for (var i in query) {
@@ -84,5 +128,6 @@ module.exports = {
     searchGoogleBooks: searchGoogleBooks,
     assignValue: assignValue,
     searchGoodReadsArray: searchGoodReadsArray,
-    searchAmazonArray: searchAmazonArray
+    searchAmazonArray: searchAmazonArray,
+    searchEbayArray: searchEbayArray
 }

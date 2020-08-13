@@ -4,8 +4,10 @@ import { Card, Rating, Grid, Image } from "semantic-ui-react";
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 async function addBook(response, id) {
-  return await axios.post("http://localhost:3000/books/insert", {
+  return await axios.post(BACKEND_URL + '/books/insert', {
     id: id,
     toInsert: response,
   });
@@ -143,6 +145,35 @@ const Result = (props) => {
           </Grid.Row>
         </Grid>
       </Card.Content>
+      <Card.Content>
+        <Grid divided="vertically">
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              {props.eBayPrice == null
+                ? "Price on Ebay: Not Available"
+                : "Price on Ebay: $" + props.eBayPrice}
+            </Grid.Column>
+            <Grid.Column>
+              {props.eBayPrice == null ? null : (
+                <button
+                  type="button"
+                  class="ui right floated button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    let newLink =  props.eBayLink;
+                    console.log(newLink);
+                    window.open(newLink, "_blank");
+                  }}
+                >
+                  {" "}
+                  Buy on Ebay
+                </button>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Card.Content>
+ 
     </Card>
   );
 };

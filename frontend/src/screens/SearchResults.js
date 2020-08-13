@@ -21,6 +21,8 @@ const SearchResults = props => {
                             id = {props.id}
                             amazonLink = {result.amazonLink}
                             googleLink = {result.link}
+                            eBayLink = {result.eBayLink}
+                            eBayPrice = {result.eBayPrice}
                         />
                     ); 
                 })}

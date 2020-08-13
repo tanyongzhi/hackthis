@@ -5,8 +5,6 @@ require('dotenv').config()
 const mongoService = require('../mongo/MongoService.js');
 const {OAuth2Client} = require('google-auth-library');
 
-CALLBACK_URL='http://localhost:3000/auth/google/callback'
-
 async function verifyToken(token, id) {
     const client = new OAuth2Client(process.envCLIENT_ID);
     const ticket = await client.verifyIdToken({
