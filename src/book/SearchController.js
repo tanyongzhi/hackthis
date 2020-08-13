@@ -19,7 +19,7 @@ module.exports = function(app) {
             }
             catch(err) {
                 console.log(err);
-                next();
+                res.json({});
                 return;
             }
 
@@ -35,7 +35,7 @@ module.exports = function(app) {
             }
             catch(err) {
                 console.log(err);
-                next();
+                res.json({});
                 return;
             }
 
@@ -45,7 +45,7 @@ module.exports = function(app) {
             }
             catch(err) {
                 console.log(err);
-                next();
+                res.json({});
                 return;
             }
 
@@ -55,7 +55,7 @@ module.exports = function(app) {
             }
             catch(err) {
                 console.log(err);
-                next();
+                res.json({});
                 return;
             }
             console.log(final)
@@ -108,15 +108,25 @@ async function searchGoogle(bookQuery) {
     for (var i = 0; i < 10; i++) {
         let volumeInfo = googleData.data.items[i].volumeInfo;
         let saleInfo = googleData.data.items[i].saleInfo;
+        try {
+            let isbn = volumeInfo.industryIdentifiers[0].identifier;
+        }
+        catch {
+            continue;
+        }
 
-        let isbn = volumeInfo.industryIdentifiers[0].identifier;
         let price = saleInfo.listPrice!= undefined ? saleInfo.listPrice.amount : Infinity;
         let currBooksData = {}
         currBooksData.title = volumeInfo.title;
         if (volumeInfo.subtitle != undefined) {
             currBooksData.title += ' ' + volumeInfo.subtitle;
         }
-        currBooksData.imageLink = volumeInfo.imageLinks.thumbnail;
+        try{
+            currBooksData.imageLink = volumeInfo.imageLinks.thumbnail;
+        }
+        catch {
+            currBooksData.imageLink = undefined;
+        }
         currBooksData.authors = volumeInfo.authors;
         currBooksData.isbn = isbn;
         currBooksData.price = price;
