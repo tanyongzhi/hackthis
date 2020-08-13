@@ -102,7 +102,7 @@ const SearchPage = (props) => {
               </Header>
               <Header as="h1" textAlign="center">
                 Welcome,  
-                {' '+ props.response.Ot.sU}
+                {' '+ props.response.Ot.sW}
               </Header>
               <Divider />
               <span>Keyword</span>
