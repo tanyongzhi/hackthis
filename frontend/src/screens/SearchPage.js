@@ -8,17 +8,17 @@ const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-console.log('backend urll ' + BACKEND_URL);
+console.log("backend urll " + BACKEND_URL);
 
 async function verify(response) {
-  return await axios.post(BACKEND_URL + '/auth/verify', {
+  return await axios.post(BACKEND_URL + "/auth/verify", {
     token: response.tokenId,
     id: response.googleId,
   });
 }
 
 async function search(response) {
-  return await axios.get(BACKEND_URL + '/search', {
+  return await axios.get(BACKEND_URL + "/search", {
     params: {
       query: response,
     },
@@ -26,7 +26,7 @@ async function search(response) {
 }
 
 async function history(id) {
-  return await axios.get(BACKEND_URL + '/books/' + id);
+  return await axios.get(BACKEND_URL + "/books/" + id);
 }
 
 const SearchPage = (props) => {
@@ -38,6 +38,7 @@ const SearchPage = (props) => {
   const [pressSearchHistory, setPressSearchHistory] = useState(false);
   const [bookArray, setBookArray] = useState([]);
   const [historyArray, setHistoryArray] = useState([]);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     if (!isAuth) {
@@ -47,6 +48,20 @@ const SearchPage = (props) => {
         props.handler();
         setIsAuth(false);
       });
+    }
+    if (rerender) {
+      setSearchHistory(true);
+      setRerender(false);
+      let reply = history(props.response.googleId);
+      reply
+        .then(function (res) {
+          setHistoryArray(res.data);
+          console.log("Rerender");
+        })
+        .catch((err) => {
+          // Handle Error Here
+          console.error(err);
+        });
     }
   });
 
@@ -101,8 +116,8 @@ const SearchPage = (props) => {
                 Textbook Search
               </Header>
               <Header as="h1" textAlign="center">
-                Welcome,  
-                {' '+ props.response.Ot.sW}
+                Welcome,
+                {" " + props.response.Ot.sW}
               </Header>
               <Divider />
               <span>Keyword</span>
@@ -204,7 +219,11 @@ const SearchPage = (props) => {
               </div>
               <div style={styles.textCenter}>
                 <Button onClick={searchButtonHandler}>Search</Button>
-                <Button color="green" onClick={historyButtonHandler} loading = {true}>
+                <Button
+                  color="green"
+                  onClick={historyButtonHandler}
+                  loading={true}
+                >
                   Saved Books
                 </Button>
               </div>
@@ -236,12 +255,16 @@ const SearchPage = (props) => {
                 </Button>
               </div>
               <Divider />
-              <SearchHistory array={historyArray} />
+              <SearchHistory
+                array={historyArray}
+                id={props.response.googleId}
+                setRerender = {setRerender}
+                rerender = {rerender}
+              />
             </div>
           </Container>
         );
       }
-      
     }
   }
 };

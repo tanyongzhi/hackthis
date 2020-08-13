@@ -1,7 +1,29 @@
 import React from "react";
 import { Card, Rating, Grid, Image } from "semantic-ui-react";
 
+const axios = require("axios");
+require("dotenv").config({ path: "../../.env" });
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+async function removeBook(isbn, id) {
+  return await axios.post(BACKEND_URL + "/books/delete", {
+    id: id,
+    isbn: isbn,
+  });
+}
+
 const HistoryResult = (props) => {
+  const removeBookHandler = (e) => {
+    console.log("Removed")
+    let reply = removeBook(props.isbn, props.id);
+    reply.then(
+      props.setRerender(true)
+    ).catch((err) => {
+      console.error(err);
+    });
+  };
+
   const authorArray = (array) => {
     let authorString = "Author(s): ";
     var i;
@@ -28,11 +50,12 @@ const HistoryResult = (props) => {
       return <span> Description: {trimmedString} </span>;
     }
   };
+
   return (
     <Card fluid>
       <Card.Content>
         <Grid divided="vertically">
-          <Grid.Row columns={2}>
+          <Grid.Row columns={3}>
             <Grid.Column width={3}>
               <Image src={props.imageLink}></Image>
             </Grid.Column>
@@ -52,6 +75,14 @@ const HistoryResult = (props) => {
               ) : (
                 ""
               )}
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <button
+                class="ui right floated button"
+                onClick={removeBookHandler}
+              >
+                Remove
+              </button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -142,7 +173,6 @@ const HistoryResult = (props) => {
           </Grid.Row>
         </Grid>
       </Card.Content>
- 
     </Card>
   );
 };

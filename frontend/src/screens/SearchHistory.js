@@ -3,7 +3,6 @@ import {Card} from 'semantic-ui-react';
 import HistoryResult from '../components/HistoryResults';
 
 const SearchHistory = props => {
-
     if (Array.isArray(props.array) && props.array.length) {
         return (
             <Card.Group>
@@ -22,6 +21,9 @@ const SearchHistory = props => {
                             imageLink = {result.imageLink}
                             eBayLink = {result.eBayLink}
                             eBayPrice = {result.eBayPrice}
+                            isbn = {result.isbn}
+                            setRerender = {props.setRerender}
+                            rerender = {props.rerender}
                         />
                     ); 
                 })}
