@@ -78,20 +78,20 @@ class User {
         let client = await mongoService.openConnectionToMongo(process.env.MONGO_URI);
 
         let currBooks = await mongoService.searchDatabase(client, DB, BOOK_COLLECTION, {userId: id});
+        let newBooks = [];
 
         if (currBooks.length == 0) {
             return;
         }
         else {
             for (var i in currBooks[0].books) {
-                if (isbn == currBooks[0].books[i].isbn) {
-                    delete currBooks[0].books[i];
-                    break;
+                if (isbn != currBooks[0].books[i].isbn) {
+                    newBooks.push(currBooks[0].books[i]);
                 }
             }
         }
 
-        let result = mongoService.updateDatabase(client, DB, BOOK_COLLECTION, {userId: id}, {books: currBooks[0].books});
+        let result = mongoService.updateDatabase(client, DB, BOOK_COLLECTION, {userId: id}, {books: newBooks});
 
         mongoService.closeConnectionToMongo(client);
         

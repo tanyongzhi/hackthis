@@ -58,7 +58,6 @@ module.exports = function(app) {
     })
 
     app.post('/books/delete', async function (req, res, next) {
-        console.log(req.body)
         if (req.body.isbn.length == 0) {
             return res.status(400).send('error!');
         }
