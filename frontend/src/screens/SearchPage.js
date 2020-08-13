@@ -3,6 +3,7 @@ import { Header, Divider, Input, Button, Container } from "semantic-ui-react";
 import SignIn from "../SignIn";
 import SearchResults from "./SearchResults";
 import SearchHistory from "./SearchHistory";
+import GitHubForkRibbon from 'react-github-fork-ribbon';
 
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
@@ -111,6 +112,11 @@ const SearchPage = (props) => {
       if (!pressSearch) {
         return (
           <Container style={styles.containerPadding}>
+              <GitHubForkRibbon href="https://github.com/tanyongzhi/hackthis"
+              target="_blank"
+              position="right">
+              Fork me on GitHub
+            </GitHubForkRibbon>
             <div>
               <Header as="h1" textAlign="center">
                 Textbook Search
