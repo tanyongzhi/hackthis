@@ -109,7 +109,7 @@ async function searchGoogle(bookQuery) {
         let volumeInfo = googleData.data.items[i].volumeInfo;
         let saleInfo = googleData.data.items[i].saleInfo;
         try {
-            let isbn = volumeInfo.industryIdentifiers[0].identifier;
+            var isbn = volumeInfo.industryIdentifiers[0].identifier;
         }
         catch {
             continue;

@@ -15,11 +15,11 @@ Before we begin, install the following:
 The backend portion of the project is stored in the root directory. The frontend of the project is in the `./frontend` folder
 
 ### Continuous Integration
-CI/CD has been set up with the frontend being delpoyed via netlify, and the backend being deployed via Heroku.
+CI/CD has been set up with the frontend being delpoyed via [Netlify](https://www.netlify.com/), and the backend being deployed via [Heroku](https://www.heroku.com/).
 
 ### Installing
 
-Naviate to the root folder and run:  
+Naviate to the root folder (or `./frontend` if you want to start the frontend) and run:  
 `npm install`
 
 Set the following environment variables in `./.env`  
@@ -30,7 +30,7 @@ Set the following environment variables in `./.env`
 To start the frontend, navigate to ./frontend and run:  
 `npm start`  
 To start the backend, navigate to root diretory and run:  
-`node app.js`
+`npm start`  
 
 ## Built With
 - React
