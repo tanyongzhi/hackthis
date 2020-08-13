@@ -51,15 +51,16 @@ const SearchPage = (props) => {
       });
     }
     if (rerender) {
-      setSearchHistory(true);
+      
       let reply = history(props.response.googleId);
-      setRerender(false);
+      
       reply
         .then(function (res) {
           setHistoryArray(res.data);
           console.log(res.data);
           console.log("Rerender");
-          
+          setRerender(false);
+          setSearchHistory(true);
         })
         .catch((err) => {
           // Handle Error Here
