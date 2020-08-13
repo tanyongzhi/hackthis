@@ -26,11 +26,13 @@ const SearchHistory = (props) => {
                 setRerender={props.setRerender}
                 rerender={props.rerender}
                 id={props.id}
-              />
+              ></HistoryResult>
+              
             );
           }
         })}
       </Card.Group>
+      
     );
   } else {
     return (

@@ -40,6 +40,7 @@ const SearchPage = (props) => {
   const [bookArray, setBookArray] = useState([]);
   const [historyArray, setHistoryArray] = useState([]);
   const [rerender, setRerender] = useState(false);
+  const [rerenderComplete, setRerenderComplete] = useState(true);
 
   useEffect(() => {
     if (!isAuth) {
@@ -51,24 +52,26 @@ const SearchPage = (props) => {
       });
     }
     if (rerender) {
-      
-      let reply = history(props.response.googleId);
-      
+      rerenderPage();
+    }
+  });
+
+  const rerenderPage = () => {
+    let reply = history(props.response.googleId);
+      setRerenderComplete(false);
+      setSearchHistory(false);
       reply
         .then(function (res) {
-          setHistoryArray(res.data);
-          console.log(res.data);
-          console.log("Rerender");
           setRerender(false);
+          setHistoryArray(res.data);
           setSearchHistory(true);
+          setRerenderComplete(true);
         })
         .catch((err) => {
           // Handle Error Here
           console.error(err);
         });
-    }
-  });
-
+  }
   const keywordInputHandler = (e) => {
     setKeyWord(e.target.value);
   };
@@ -100,7 +103,6 @@ const SearchPage = (props) => {
       .then(function (res) {
         setHistoryArray(res.data);
         setPressSearchHistory(false);
-        console.log(res.data);
       })
       .catch((err) => {
         // Handle Error Here
@@ -113,39 +115,76 @@ const SearchPage = (props) => {
   } else {
     if (!searchHistory) {
       if (!pressSearch) {
-        return (
-          <Container style={styles.containerPadding}>
-              <GitHubForkRibbon href="https://github.com/tanyongzhi/hackthis"
-              target="_blank"
-              position="right">
-              Fork me on GitHub
-            </GitHubForkRibbon>
-            <div>
-              <Header as="h1" textAlign="center">
-                Textbook Search
-              </Header>
-              <Header as="h1" textAlign="center">
-                Welcome,
-                {" " + props.response.Ot.sW}
-              </Header>
-              <Divider />
-              <span>Keyword</span>
-              <div style={styles.bottomMargin}>
-                <Input
-                  fluid
-                  style={styles.bottomMargin}
-                  value={keyword}
-                  onChange={keywordInputHandler}
+        if (rerenderComplete) {
+          return (
+            <Container style={styles.containerPadding}>
+                <GitHubForkRibbon href="https://github.com/tanyongzhi/hackthis"
+                target="_blank"
+                position="right">
+                Fork me on GitHub
+              </GitHubForkRibbon>
+              <div>
+                <Header as="h1" textAlign="center">
+                  Textbook Search
+                </Header>
+                <Header as="h1" textAlign="center">
+                  Welcome,
+                  {" " + props.response.Ot.sW}
+                </Header>
+                <Divider />
+                <span>Keyword</span>
+                <div style={styles.bottomMargin}>
+                  <Input
+                    fluid
+                    style={styles.bottomMargin}
+                    value={keyword}
+                    onChange={keywordInputHandler}
+                  />
+                </div>
+                <Divider />
+                <div style={styles.textCenter}>
+                  <Button onClick={searchButtonHandler}>Search</Button>
+                  <Button onClick={historyButtonHandler}>Saved Books</Button>
+                </div>
+              </div>
+            </Container>
+          );
+        } else {
+          return (
+            <Container style={styles.containerPadding}>
+              <div>
+                <Header as="h1" textAlign="center">
+                  Textbook Search
+                </Header>
+                <Divider />
+                <span>Keyword</span>
+                <div style={styles.bottomMargin}>
+                  <Input
+                    fluid
+                    style={styles.bottomMargin}
+                    value={keyword}
+                    onChange={keywordInputHandler}
+                  />
+                </div>
+                <div style={styles.textCenter}>
+                  <Button onClick={searchButtonHandler}>Search</Button>
+                  <Button color="green" onClick={historyButtonHandler} loading = {true}>
+                    Saved Books
+                  </Button>
+                </div>
+                <Divider />
+                <SearchHistory
+                  array={historyArray}
+                  id={props.response.googleId}
+                  setRerender = {setRerender}
+                  rerender = {rerender}
+                  setRerenderComplete = {setRerenderComplete}
                 />
               </div>
-              <Divider />
-              <div style={styles.textCenter}>
-                <Button onClick={searchButtonHandler}>Search</Button>
-                <Button onClick={historyButtonHandler}>Saved Books</Button>
-              </div>
-            </div>
-          </Container>
-        );
+            </Container>
+          );
+        }
+        
       } else {
         if (pressSearchLoading) {
           return (
