@@ -8,7 +8,7 @@ const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-console.log(BACKEND_URL);
+console.log('backend url ' + BACKEND_URL);
 
 async function verify(response) {
   return await axios.post(BACKEND_URL + '/auth/verify', {
