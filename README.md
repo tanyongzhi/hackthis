@@ -2,7 +2,7 @@
 
 This is our submission for the [HackThis](http://hackthis.hackillinois.org/) hackathon organized by HackIllinois. The app can be found [here](https://jovial-jang-243cf5.netlify.app/).
 
-![Alt text](https://i.imgur.com/nbBABBm.png)
+![Alt text](https://i.imgur.com/cfnCmrV.png)
 
 ## About The Project
 ### Problem Statement
