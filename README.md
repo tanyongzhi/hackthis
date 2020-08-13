@@ -1,4 +1,5 @@
 # HackThis - Book Stop :book:
+> Finding the best book for your buck
 
 This is our submission for the [HackThis](http://hackthis.hackillinois.org/) hackathon organized by HackIllinois. The app can be found [here](https://jovial-jang-243cf5.netlify.app/).
 
