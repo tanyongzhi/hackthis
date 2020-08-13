@@ -11,6 +11,12 @@ Before we begin, install the following:
 - node and npm
 - git
 
+### Project Structure
+The backend portion of the project is stored in the root directory. The frontend of the project is in the `./frontend` folder
+
+### Continuous Integration
+CI/CD has been set up with the frontend being delpoyed via netlify, and the backend being deployed via Heroku.
+
 ### Installing
 
 Naviate to the root folder and run:  
