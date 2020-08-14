@@ -3,7 +3,7 @@ import { Header, Divider, Input, Button, Container } from "semantic-ui-react";
 import SignIn from "../SignIn";
 import SearchResults from "./SearchResults";
 import SearchHistory from "./SearchHistory";
-import GitHubForkRibbon from 'react-github-fork-ribbon';
+import GitHubForkRibbon from "react-github-fork-ribbon";
 
 const axios = require("axios");
 require("dotenv").config({ path: "../../.env" });
@@ -58,20 +58,20 @@ const SearchPage = (props) => {
 
   const rerenderPage = () => {
     let reply = history(props.response.googleId);
-      setRerenderComplete(false);
-      setSearchHistory(false);
-      reply
-        .then(function (res) {
-          setRerender(false);
-          setHistoryArray(res.data);
-          setSearchHistory(true);
-          setRerenderComplete(true);
-        })
-        .catch((err) => {
-          // Handle Error Here
-          console.error(err);
-        });
-  }
+    setRerenderComplete(false);
+    setSearchHistory(false);
+    reply
+      .then(function (res) {
+        setRerender(false);
+        setHistoryArray(res.data);
+        setSearchHistory(true);
+        setRerenderComplete(true);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.error(err);
+      });
+  };
   const keywordInputHandler = (e) => {
     setKeyWord(e.target.value);
   };
@@ -118,9 +118,11 @@ const SearchPage = (props) => {
         if (rerenderComplete) {
           return (
             <Container style={styles.containerPadding}>
-                <GitHubForkRibbon href="https://github.com/tanyongzhi/hackthis"
+              <GitHubForkRibbon
+                href="https://github.com/tanyongzhi/hackthis"
                 target="_blank"
-                position="right">
+                position="right"
+              >
                 Fork me on GitHub
               </GitHubForkRibbon>
               <div>
@@ -168,7 +170,11 @@ const SearchPage = (props) => {
                 </div>
                 <div style={styles.textCenter}>
                   <Button onClick={searchButtonHandler}>Search</Button>
-                  <Button color="green" onClick={historyButtonHandler} loading = {true}>
+                  <Button
+                    color="green"
+                    onClick={historyButtonHandler}
+                    loading={true}
+                  >
                     Saved Books
                   </Button>
                 </div>
@@ -176,15 +182,14 @@ const SearchPage = (props) => {
                 <SearchHistory
                   array={historyArray}
                   id={props.response.googleId}
-                  setRerender = {setRerender}
-                  rerender = {rerender}
-                  setRerenderComplete = {setRerenderComplete}
+                  setRerender={setRerender}
+                  rerender={rerender}
+                  setRerenderComplete={setRerenderComplete}
                 />
               </div>
             </Container>
           );
         }
-        
       } else {
         if (pressSearchLoading) {
           return (
@@ -306,8 +311,8 @@ const SearchPage = (props) => {
               <SearchHistory
                 array={historyArray}
                 id={props.response.googleId}
-                setRerender = {setRerender}
-                rerender = {rerender}
+                setRerender={setRerender}
+                rerender={rerender}
               />
             </div>
           </Container>
